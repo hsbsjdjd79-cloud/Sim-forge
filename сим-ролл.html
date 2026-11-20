@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d19">
+<title>SIM // FORGE — Number Empire</title>
+<style>
+:root{--bg:#080d19;--panel:#121d31;--panel2:#192945;--line:#2c456b;--blue:#4e8be8;--cyan:#59d9ee;--gold:#ffd36a;--pink:#ff5e88;--muted:#94a7c6;--text:#f2f6ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);background:radial-gradient(ellipse at 50% -15%,#24436d 0,#101b30 38%,#080d19 78%);overscroll-behavior:none}button,input{font:inherit}button{color:inherit;border:0;cursor:pointer;touch-action:manipulation}.app{max-width:620px;min-height:100dvh;margin:auto;padding:12px 14px 100px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.brand{font-size:19px;font-weight:1000;letter-spacing:1px}.brand small{display:block;font-size:9px;letter-spacing:2.3px;color:#9fb5d7;margin-top:2px}.icon{width:40px;height:40px;border-radius:13px;background:#1a2a44;border:1px solid #3a557d;font-size:18px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.stat{padding:9px 5px;text-align:center;border-radius:13px;background:linear-gradient(145deg,#1d3455,#111c30);border:1px solid #38577e;box-shadow:0 6px 16px #0005}.stat span{display:block;font-size:9px;color:#a9bbd6;letter-spacing:1px}.stat b{display:block;font-size:16px;margin-top:3px}.ticker{text-align:center;font-size:11px;color:#b9cbe5;margin:11px 0 13px}.ticker b{color:var(--cyan)}.page{display:none;animation:appear .22s ease}.page.active{display:block}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.section{font-size:10px;letter-spacing:1.5px;font-weight:950;color:#9fb5d7;margin:16px 2px 8px}.hero{position:relative;overflow:hidden;border-radius:21px;padding:13px;background:linear-gradient(145deg,#244e82,#172f55 55%,#111d35);border:1px solid #527eae;box-shadow:0 12px 28px #0007}.hero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-100px;top:-125px;background:#76dfff22;filter:blur(4px)}.hero-head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1.4px;font-weight:900;color:#d9eaff;margin-bottom:10px}.sim{position:relative;z-index:1;overflow:hidden;min-height:146px;border-radius:15px;padding:14px 16px;color:#15233a;background:linear-gradient(135deg,#fff,#dceaff 57%,#b8cbe6);box-shadow:0 9px 22px #0008;display:flex;flex-direction:column;justify-content:space-between}.sim:after{content:"";position:absolute;top:-80%;left:-40%;height:260%;width:28%;transform:rotate(25deg);background:linear-gradient(90deg,transparent,#ffffffd9,transparent);animation:shine 4.8s infinite}.sim-top,.sim-bottom{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:950}.chip{width:25px;height:19px;border-radius:5px;background:linear-gradient(135deg,#ffe9a2,#bd8e30);border:1px solid #aa7d28}.sim-num{text-align:center;font-size:clamp(24px,6vw,33px);font-weight:1000;letter-spacing:1px;white-space:nowrap}.sim-bottom{color:#40516d}.generate{position:relative;z-index:1;width:100%;margin-top:12px;padding:15px;border-radius:13px;background:linear-gradient(135deg,#65a6ff,#3566bd);box-shadow:0 5px 0 #24477f,0 10px 20px #0005;font-weight:950;letter-spacing:.5px}.generate:active,.btn:active,.nav button:active{transform:translateY(2px);filter:brightness(1.12)}.generate:disabled,.btn:disabled{opacity:.4;cursor:not-allowed}.panel{background:linear-gradient(145deg,#17263e,#101a2c);border:1px solid #2d4567;border-radius:15px;padding:12px;margin:9px 0;box-shadow:0 5px 15px #0003}.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.muted{font-size:11px;color:var(--muted)}.gold{color:var(--gold)}.cyan{color:var(--cyan)}.pink{color:var(--pink)}.progress{height:8px;background:#08111f;border-radius:99px;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4c91f0,#64e0e8);border-radius:99px;transition:width .3s}.btn{padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,#3f75bd,#294b80);border:1px solid #5684bd;font-size:11px;font-weight:900}.btn.alt{background:#202f49;border-color:#405675}.btn.goldbtn{background:linear-gradient(135deg,#9b7732,#655020);border-color:#d0a74a}.btn.danger{background:#63354b;border-color:#a75c7a}.btn.full{width:100%}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{min-height:82px;display:flex;align-items:center;gap:10px;text-align:left;padding:12px;border-radius:15px;background:linear-gradient(145deg,#223d63,#152844);border:1px solid #3b5c86;box-shadow:0 5px 15px #0004}.tile i{font-style:normal;font-size:25px}.tile strong{display:block;font-size:12px}.tile small{display:block;color:#b2c5df;font-size:9px;margin-top:4px}.cardlist{display:grid;gap:9px}.simitem{border-radius:14px;padding:12px;background:linear-gradient(145deg,#1b2c47,#111c30);border:1px solid #344e71;position:relative;overflow:hidden}.simitem .num{text-align:center;font-size:21px;font-weight:1000;letter-spacing:1px;margin:8px 0}.rarity{font-size:10px;font-weight:1000;letter-spacing:1px}.common{color:#b6bfd0}.rare{color:#52c7ff}.epic{color:#c18aff}.legendary{color:#ffd36a}.mythic{color:#ff638d}.secret{color:#fff;text-shadow:0 0 10px #fff,0 0 20px #b6a3ff}.ancient{color:#70ffe1;text-shadow:0 0 10px #70ffe1}.empty{text-align:center;color:#8499b8;padding:24px 10px;font-size:12px}.nav{position:fixed;z-index:5;bottom:0;left:50%;transform:translateX(-50%);width:min(620px,100%);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:#0c1525ed;backdrop-filter:blur(16px);border-top:1px solid #2c405e}.nav button{background:transparent;color:#8398b7;border-radius:10px;padding:6px 2px;font-size:9px;font-weight:900}.nav button span{display:block;font-size:18px;margin-bottom:2px}.nav button.active{background:#203a5f;color:#e7f2ff}.toast{position:fixed;z-index:30;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translate(-50%,-20px);opacity:0;pointer-events:none;background:#eef5ff;color:#101a2a;padding:11px 16px;border-radius:12px;font-size:12px;font-weight:950;box-shadow:0 8px 25px #0009;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.overlay{display:none;position:fixed;z-index:20;inset:0;background:#030711c9;backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:10px}.overlay.show{display:flex}.sheet{width:min(620px,100%);max-height:86dvh;overflow:auto;background:linear-gradient(145deg,#1a2b46,#0f192b);border:1px solid #456184;border-radius:20px;padding:15px;box-shadow:0 18px 50px #000b;animation:rise .2s ease}@keyframes rise{from{transform:translateY(35px);opacity:.5}to{transform:none;opacity:1}}.sheethead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.sheethead h3{margin:0;font-size:15px}.close{width:32px;height:32px;border-radius:9px;background:#2a405f;font-size:19px}.filters{display:flex;gap:6px;overflow:auto;padding-bottom:8px}.filters button{white-space:nowrap;padding:7px 10px;border-radius:9px;background:#1b2b44;border:1px solid #3a5274;font-size:10px}.filters button.active{background:#3768a8}.input{width:100%;padding:12px;border-radius:10px;border:1px solid #405b7f;background:#0b1422;color:#fff;outline:none}.input:focus{border-color:#64b4ff}.quest{padding:12px;border-radius:13px;background:#172740;border:1px solid #314b6c;margin:8px 0}.quest .progress{margin:7px 0}.badge{display:inline-block;padding:4px 7px;border-radius:7px;background:#243b5d;color:#b9d6fa;font-size:9px;font-weight:900}.achievement{display:flex;align-items:center;gap:11px;padding:11px;border-radius:13px;background:#17263d;border:1px solid #304967;margin:8px 0}.achievement .medal{font-size:25px}.achievement.done{border-color:#8b7441;background:#2c2a23}.footer{text-align:center;color:#657c9d;font-size:9px;margin:18px 0}.pop{animation:pop .45s}@keyframes pop{0%{transform:scale(.94);filter:brightness(1)}45%{transform:scale(1.04);filter:brightness(1.5)}100%{transform:scale(1);filter:brightness(1)}}.shake{animation:shake .3s}@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.glow{box-shadow:0 0 0 2px var(--rarity),0 0 24px var(--rarity)}
+/* v3: cleaner layout + tactile number-roll animation */
+.app{max-width:560px;padding-left:12px;padding-right:12px}.brand{font-size:16px;letter-spacing:.6px}.brand small{font-size:8px;letter-spacing:1.6px}.icon{width:36px;height:36px;border-radius:11px;background:#172235;border-color:#2c3d57}.stat{padding:8px 4px;border-radius:11px;background:#111d2e;border-color:#263b57;box-shadow:none}.hero{border-radius:17px;padding:11px;background:linear-gradient(145deg,#1b385c,#142641 65%,#101a2b);border-color:#345779;box-shadow:none}.sim{min-height:132px;border-radius:12px;transition:filter .2s,transform .2s}.sim.rolling{animation:rollPulse .22s infinite alternate;filter:saturate(1.25)}.sim.rolling .sim-num{filter:blur(.65px);transform:scaleY(.94)}.sim-num{transition:filter .12s,transform .12s;font-variant-numeric:tabular-nums}.generate{border-radius:11px;box-shadow:0 3px 0 #24477f;font-size:12px}.panel{border-radius:12px;box-shadow:none;background:#111d2e;border-color:#263b57}.tile{border-radius:12px;box-shadow:none;background:#172a44;border-color:#2c486a}.nav{background:#0b1422f2;border-color:#223650}.nav button.active{background:#1b304b}.section{margin-top:13px}.rolling .sim-num{letter-spacing:1.5px}@keyframes rollPulse{from{box-shadow:0 7px 17px #0007,0 0 0 1px #69baff55}to{box-shadow:0 7px 17px #0007,0 0 0 3px #69baffaa}}.admin-box{border:1px solid #9c5c77;background:#281a2a;border-radius:13px;padding:12px;margin-top:12px}.admin-box h3{margin:0 0 8px;color:#ff9fbe;font-size:13px}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.admin-grid .btn{min-height:38px}.save-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hint{padding:9px 10px;border-left:2px solid #61b9e9;background:#14263a;border-radius:0 9px 9px 0;color:#b8cce3;font-size:10px;line-height:1.45;margin:9px 0}@media(min-width:560px){.app{padding-top:20px}.hero{padding:17px}.sim{min-height:165px}}
+/* v3.1 FIX: visible slot-machine animation on touch screens and desktop */
+.sim{isolation:isolate;transform:translateZ(0);will-change:transform,filter;}
+.sim.rolling{animation:simRollCard .34s ease-in-out infinite alternate;filter:saturate(1.45) contrast(1.04);}
+.sim.rolling:before{content:"";position:absolute;z-index:3;left:0;right:0;top:-35%;height:22%;pointer-events:none;background:linear-gradient(180deg,transparent,#4ebcff66,transparent);animation:scanPass .62s linear infinite;}
+.sim.rolling:after{animation:shine .8s linear infinite;opacity:.9;}
+.sim.rolling .sim-num{display:block;animation:digitJolt .075s steps(2,end) infinite alternate;color:#142b4b;text-shadow:0 1px 0 #fff,0 0 12px #58aaff88;filter:blur(.25px);}
+.sim.rolling .sim-top,.sim.rolling .sim-bottom{opacity:.65;}
+@keyframes simRollCard{from{transform:perspective(700px) rotateX(-2deg) scale(.985);box-shadow:0 5px 15px #0008,0 0 0 1px #63c7ff88}to{transform:perspective(700px) rotateX(2deg) scale(1.015);box-shadow:0 12px 25px #0009,0 0 0 3px #63c7ffcc,0 0 28px #42aaff55}}
+@keyframes scanPass{from{top:-35%}to{top:115%}}
+@keyframes digitJolt{from{transform:translateY(-2px) scaleY(.94);letter-spacing:1px}to{transform:translateY(2px) scaleY(1.06);letter-spacing:2.5px}}
+.sim.result{animation:resultReveal .55s cubic-bezier(.2,.8,.2,1);}
+.sim.rarity-glow{box-shadow:0 0 0 2px var(--rarity),0 0 18px var(--rarity),0 0 38px color-mix(in srgb,var(--rarity) 55%,transparent);}
+.sim.rarity-glow:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:1px solid var(--rarity);box-shadow:inset 0 0 18px color-mix(in srgb,var(--rarity) 24%,transparent);}
+.sim.rolling{--rarity:#63c7ff!important;box-shadow:0 0 0 2px #63c7ff,0 0 24px #42aaff66!important;}
+@keyframes resultReveal{0%{transform:scale(.94) rotateX(8deg);filter:brightness(1.8)}65%{transform:scale(1.035);filter:brightness(1.3)}100%{transform:scale(1);filter:none}}
+#generate.is-rolling{background:linear-gradient(110deg,#24538f,#67c9e8,#24538f);background-size:220% 100%;animation:buttonFlow .8s linear infinite;}
+@keyframes buttonFlow{to{background-position:220% 0}}
+@media(prefers-reduced-motion:reduce){.sim.rolling,.sim.rolling:before,.sim.rolling:after,.sim.rolling .sim-num,#generate.is-rolling{animation-duration:.35s!important;animation-iteration-count:1!important}}
+
+
+/* v3.4: high-visibility slot roll */
+.sim.rolling .sim-num{
+  animation:slotNumber .11s steps(2,end) infinite!important;
+  color:#10294b!important;
+  text-shadow:0 0 5px #fff,0 0 14px #52caff!important;
+  filter:blur(.35px)!important;
+}
+@keyframes slotNumber{
+  0%{transform:translateY(-5px) scaleY(.88);opacity:.78}
+  50%{transform:translateY(0) scaleY(1.08);opacity:1}
+  100%{transform:translateY(5px) scaleY(.9);opacity:.82}
+}
+.sim.rolling{outline:2px solid #66d8ff;outline-offset:2px}
+
+
+/* v3.5 — rarity reveal effects */
+#featured{position:relative;isolation:isolate;overflow:hidden}
+#featured::before,#featured::after{content:"";position:absolute;inset:-35%;pointer-events:none;opacity:0;z-index:3}
+#featured::before{background:conic-gradient(from 0deg,transparent 0 22%,var(--rarity,#fff) 25%,transparent 29% 48%,var(--rarity,#fff) 51%,transparent 55% 100%);mix-blend-mode:screen}
+#featured::after{inset:0;background:radial-gradient(circle at center,transparent 15%,var(--rarity,#fff) 150%);mix-blend-mode:screen}
+#featured.legendary-tease{border-color:#ffd36a;box-shadow:0 0 0 1px #ffd36a,0 0 18px #ffbd3b99,0 0 42px #ff9f1c66}
+#featured.legendary-tease::before{opacity:.48;animation:legendaryOrbit 1.1s linear infinite}
+#featured.legendary-tease::after{opacity:.22;animation:legendaryPulse .55s ease-in-out infinite alternate}
+#featured.mythic-tease{border-color:#ff638d;box-shadow:0 0 0 2px #ff638d,0 0 24px #ff397dcc,0 0 65px #b400ff99}
+#featured.mythic-tease::before{opacity:.72;animation:mythicOrbit .55s linear infinite}
+#featured.mythic-tease::after{opacity:.38;animation:mythicPulse .28s ease-in-out infinite alternate}
+#featured.legendary-tease .sim-num{color:#fff1b0;text-shadow:0 0 8px #ffd36a,0 0 22px #ffad25,0 0 40px #ff8c00}
+#featured.mythic-tease .sim-num{color:#fff;text-shadow:0 0 8px #ff638d,0 0 22px #ff287b,0 0 42px #9d38ff}
+#featured.legendary-tease .sim-top,#featured.mythic-tease .sim-top{animation:signalGlitch .16s steps(2) infinite}
+#featured.legendary-tease .sim-bottom,#featured.mythic-tease .sim-bottom{position:relative;z-index:4}
+#featured.legendary-tease .sim-bottom span:last-child::after{content:" · ЗОЛОТОЙ СИГНАЛ";color:#ffd36a}
+#featured.mythic-tease .sim-bottom span:last-child::after{content:" · АНОМАЛИЯ";color:#ff638d}
+#featured.legendary-reveal{animation:legendaryImpact .9s ease-out}
+#featured.mythic-reveal{animation:mythicImpact 1.25s cubic-bezier(.15,.8,.2,1)}
+#featured.legendary-reveal::before{opacity:.9;animation:legendaryBurst .9s ease-out}
+#featured.mythic-reveal::before{opacity:1;animation:mythicBurst 1.25s ease-out}
+#featured.legendary-reveal::after{opacity:.65;animation:revealFlash .65s ease-out}
+#featured.mythic-reveal::after{opacity:.9;animation:mythicFlash 1s ease-out}
+@keyframes legendaryOrbit{to{transform:rotate(360deg)}}
+@keyframes mythicOrbit{to{transform:rotate(-360deg) scale(1.08)}}
+@keyframes legendaryPulse{to{opacity:.48;transform:scale(1.04)}}
+@keyframes mythicPulse{to{opacity:.65;transform:scale(1.07)}}
+@keyframes signalGlitch{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
+@keyframes legendaryImpact{0%{transform:scale(1)}18%{transform:scale(1.045) rotate(-1deg)}38%{transform:scale(.985) rotate(1deg)}65%{transform:scale(1.018)}100%{transform:scale(1)}}
+@keyframes mythicImpact{0%{transform:scale(1);filter:brightness(1)}12%{transform:scale(1.08);filter:brightness(2.5)}25%{transform:translateX(-5px) scale(1.02)}38%{transform:translateX(5px) scale(1.04)}52%{transform:translateX(-3px) scale(1.02)}70%{transform:scale(1.035);filter:brightness(1.6)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes legendaryBurst{0%{transform:rotate(0) scale(.15);opacity:0}35%{opacity:1}100%{transform:rotate(180deg) scale(1.4);opacity:0}}
+@keyframes mythicBurst{0%{transform:rotate(0) scale(.05);opacity:0}22%{opacity:1}100%{transform:rotate(-260deg) scale(1.8);opacity:0}}
+@keyframes revealFlash{0%{opacity:0}12%{opacity:.95}100%{opacity:0}}
+@keyframes mythicFlash{0%{opacity:0}10%{opacity:1}24%{opacity:.25}38%{opacity:.9}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){#featured.legendary-tease::before,#featured.mythic-tease::before,#featured.legendary-tease::after,#featured.mythic-tease::after{animation:none}}
+
+
+/* v3.7 — admin QA console + stronger final rarity reveal */
+#featured.rarity-rare-reveal{animation:rareImpact .7s ease-out;box-shadow:0 0 0 2px #52c7ff,0 0 28px #52c7ff}
+#featured.rarity-epic-reveal{animation:epicImpact .9s ease-out;box-shadow:0 0 0 3px #bd79ff,0 0 35px #bd79ff}
+#featured.rarity-legendary-reveal{animation:legendaryImpact .9s ease-out;box-shadow:0 0 0 3px #ffd34d,0 0 42px #ff9f1c}
+#featured.rarity-mythic-reveal{animation:mythicImpact 1.25s cubic-bezier(.15,.8,.2,1);box-shadow:0 0 0 3px #ff5bce,0 0 50px #ff59d6}
+#featured.rarity-secret-reveal{animation:mythicImpact 1.4s ease-out;box-shadow:0 0 0 3px #fff,0 0 55px #777}
+#featured.rarity-ancient-reveal{animation:mythicImpact 1.5s ease-out;box-shadow:0 0 0 3px #70ffe1,0 0 60px #70ffe1}
+@keyframes rareImpact{0%{transform:scale(.97);filter:brightness(1)}45%{transform:scale(1.025);filter:brightness(1.5)}100%{transform:none;filter:none}}
+@keyframes epicImpact{0%{transform:scale(.94);filter:hue-rotate(30deg) brightness(1)}55%{transform:scale(1.04);filter:brightness(1.8)}100%{transform:none;filter:none}}
+.admin-console{margin-top:12px;display:grid;gap:10px}.admin-section input,.admin-section select,.admin-section textarea{display:block;width:100%;min-width:0;max-width:100%;box-sizing:border-box;appearance:none;-webkit-appearance:none;touch-action:manipulation;user-select:text;-webkit-user-select:text;pointer-events:auto}.admin-section input:focus,.admin-section select:focus{outline:2px solid #69baff;outline-offset:1px}.admin-section{contain:layout style}.admin-section{padding:10px;border:1px solid #61415c;border-radius:11px;background:#1a1d31}.admin-section h4{margin:0 0 8px;font-size:11px;color:#ffc0d4;letter-spacing:.7px}.admin-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px}.admin-fields .input{min-width:0;font-size:11px;padding:10px}.admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.admin-result{margin-top:8px;padding:10px;border-radius:10px;background:#0d1727;border:1px solid #3b5476;text-align:center}.admin-result .number-badge{margin:8px auto}.admin-log{max-height:130px;overflow:auto;font-size:10px;color:#b6c9e2;line-height:1.55}.admin-console .btn{font-size:10px}
+/* v3.6 — rarity frame + special number patterns */
+.number-badge{position:relative;display:block;width:100%;max-width:390px;margin:9px auto;padding:9px 6px;border:2px solid var(--number-rarity,#b6bfd0);border-radius:10px;text-align:center;font-weight:1000;font-variant-numeric:tabular-nums;letter-spacing:1.2px;background:linear-gradient(145deg,#ffffffd9,#dce8f8c9);color:#14233a;box-shadow:0 0 0 1px #0002,0 0 12px color-mix(in srgb,var(--number-rarity) 30%,transparent);transition:all .3s}
+.number-badge.nr-common{--number-rarity:#aeb7c5}
+.number-badge.nr-rare{--number-rarity:#52c7ff;box-shadow:0 0 0 1px #52c7ff55,0 0 16px #52c7ff66}
+.number-badge.nr-epic{--number-rarity:#bd79ff;box-shadow:0 0 0 2px #bd79ff88,0 0 20px #bd79ff99;animation:numberEpic 1.8s ease-in-out infinite alternate}
+.number-badge.nr-legendary{--number-rarity:#ffd34d;box-shadow:0 0 0 2px #ffd34d,0 0 24px #ffb52d;animation:numberLegendary 1.2s ease-in-out infinite alternate}
+.number-badge.nr-mythic{--number-rarity:#ff5bce;background:linear-gradient(110deg,#ff6262,#ffdc62,#69f5a7,#62cfff,#b879ff,#ff6262);background-size:300% 100%;color:#101525;text-shadow:0 1px 2px #fff9;border-color:#fff;box-shadow:0 0 0 2px #fff,0 0 25px #ff59d6,0 0 42px #66cfff;animation:rainbowNumber 2.2s linear infinite}
+.number-badge.nr-secret{--number-rarity:#090b10;background:linear-gradient(145deg,#050608,#171923);color:#fff;border:2px solid #050608;box-shadow:0 0 0 2px #6d7280,0 0 22px #000,0 0 36px #6d728088;text-shadow:0 0 8px #fff8;letter-spacing:2px;animation:secretNumber 1.5s ease-in-out infinite alternate}
+.number-badge.nr-ancient{--number-rarity:#70ffe1;background:linear-gradient(110deg,#70ffe1,#d4fff5,#6b9dff,#70ffe1);background-size:250% 100%;box-shadow:0 0 0 2px #70ffe1,0 0 28px #70ffe1;animation:rainbowNumber 1.4s linear infinite}
+#featuredNum.number-badge{max-width:100%;font-size:clamp(21px,5.6vw,30px);padding:10px 4px;letter-spacing:.8px}
+#featured.rolling #featuredNum{border-color:#63c7ff;background:#eaf5ff}
+@keyframes numberEpic{to{transform:scale(1.015);box-shadow:0 0 0 3px #bd79ff,0 0 28px #bd79ff}}
+@keyframes numberLegendary{to{transform:scale(1.025);box-shadow:0 0 0 3px #ffd34d,0 0 34px #ff9f1c}}
+@keyframes rainbowNumber{to{background-position:300% 0}}
+@keyframes secretNumber{to{transform:scale(1.025);box-shadow:0 0 0 3px #858b9a,0 0 30px #000,0 0 48px #858b9a}}
+@media(prefers-reduced-motion:reduce){.number-badge{animation:none!important}}
+
+
+.casino-table{background:radial-gradient(ellipse at center,#18543e 0,#103a30 58%,#0b201e 100%);border:5px solid #8d6a35;border-radius:18px;padding:14px;box-shadow:inset 0 0 28px #0008,0 8px 22px #0007;margin:10px 0}
+.casino-table h3{margin:0 0 8px;text-align:center;color:#f5d58b;letter-spacing:2px;font-size:13px}
+.casino-game-tabs{display:flex;gap:6px;overflow:auto;padding:4px 0 10px}
+.casino-game-tabs button{flex:0 0 auto;padding:9px 11px;border-radius:9px;background:#1b2b44;border:1px solid #49617e;font-size:10px;font-weight:900}
+.casino-game-tabs button.active{background:#8b672e;border-color:#e0bd70;color:#fff4d4}
+.casino-felt{border:1px solid #b68b48;border-radius:14px;padding:16px 10px;text-align:center;background:radial-gradient(ellipse,#176849,#0c392e);min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.casino-big{font-size:clamp(28px,8vw,44px);font-weight:1000;letter-spacing:2px;text-shadow:0 3px 8px #0008}
+.casino-sub{font-size:10px;color:#c8dfd0}
+.casino-betrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.casino-betrow .input{min-width:0}
+.casino-chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.casino-chips button{border-radius:50%;width:43px;height:43px;background:radial-gradient(circle at 35% 30%,#fff4c7,#c58b35 60%,#71471e);color:#291a0b;border:3px dashed #fff0c2;font-size:10px;font-weight:1000}
+.casino-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.casino-actions .btn{min-height:42px}
+.casino-history{font-size:10px;color:#a9bdd6;line-height:1.8}
+.casino-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.casino-stat .panel{text-align:center;margin:0;padding:9px 4px}
+.casino-stat b{display:block;font-size:15px;color:#f5d58b}
+.casino-stat span{font-size:8px;color:#a9bbd6}
+.casino-result{font-size:12px;font-weight:900;color:#f5d58b;min-height:18px}
+.casino-card{display:inline-flex;align-items:center;justify-content:center;width:42px;height:58px;border-radius:7px;background:#f5f3ea;color:#172033;font-size:20px;font-weight:1000;margin:3px;box-shadow:0 3px 8px #0008}
+.casino-card.red{color:#c52f43}
+.casino-card.back{background:repeating-linear-gradient(45deg,#203c67,#203c67 4px,#e1c17d 4px,#e1c17d 6px);color:white}
+
+/* v4.0 GRAND CASINO visual overhaul */
+.casino-hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#4c3b20 0,#171b26 55%,#0a111d 100%);border:1px solid #b28a45!important;box-shadow:0 12px 32px #0008,inset 0 1px #fff2!important}
+.casino-hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 34px,#ffffff06 35px 36px);pointer-events:none}
+.casino-table{position:relative;background:radial-gradient(ellipse at 50% 42%,#237a51 0,#10513a 48%,#08291f 100%);border:7px ridge #a98243;border-radius:22px;padding:15px 12px;box-shadow:inset 0 0 38px #0009,0 12px 28px #0009,0 0 0 1px #f7d58b44}
+.casino-table:before{content:"";position:absolute;inset:5px;border:1px solid #e5c17a55;border-radius:14px;pointer-events:none}
+.casino-table h3{font-size:12px;text-shadow:0 1px 5px #000;letter-spacing:3px}
+.casino-felt{position:relative;overflow:hidden;min-height:190px;border:1px solid #c6a05d;background:radial-gradient(ellipse at center,#1e8055 0,#10563d 65%,#0b3428 100%);box-shadow:inset 0 0 35px #001c12aa,0 4px 12px #0005}
+.casino-felt:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(125deg,transparent 0 17px,#ffffff06 18px 19px);pointer-events:none}
+.casino-big{position:relative;z-index:1;font-size:clamp(34px,10vw,54px);text-shadow:0 4px 12px #0009;letter-spacing:3px}
+.casino-sub{position:relative;z-index:1;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#d9f1df}
+.casino-game-tabs button{background:linear-gradient(180deg,#263750,#111d2e);border-color:#667b91;box-shadow:inset 0 1px #fff2,0 3px 7px #0005;transition:.2s}
+.casino-game-tabs button.active{background:linear-gradient(180deg,#e0bc68,#8a5d22);border-color:#ffe2a0;color:#271b0b;box-shadow:0 0 18px #e6b95a55,inset 0 1px #fff8}
+.casino-chips button{box-shadow:0 4px 0 #69431e,0 7px 12px #0008,inset 0 1px #fff9;transition:transform .15s}
+.casino-chips button:active{transform:translateY(3px);box-shadow:0 1px 0 #69431e}
+.casino-actions .btn{box-shadow:0 3px 0 #132b4b,0 6px 12px #0005;transition:transform .15s,filter .15s}
+.casino-result{padding:9px 4px;text-align:center;letter-spacing:1px;text-shadow:0 1px 8px #000}
+.casino-result.win{color:#ffe08a;animation:casinoWin .75s ease both}.casino-result.lose{color:#ff9aa9;animation:casinoLose .35s ease both}
+.casino-wheel{position:relative;z-index:1;width:146px;height:146px;border-radius:50%;border:8px solid #d4ad5e;background:repeating-conic-gradient(#b62e39 0deg 9.73deg,#161b24 9.73deg 19.46deg,#b62e39 19.46deg 29.19deg,#161b24 29.19deg 38.92deg);box-shadow:0 0 0 4px #553819,0 0 25px #000b,inset 0 0 0 4px #f1d78a;display:grid;place-items:center}
+.casino-wheel:before{content:"";position:absolute;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff0b8,#b68a37 48%,#543819 80%);border:4px ridge #f1d58a;box-shadow:0 0 12px #0009}
+.casino-wheel:after{content:"";position:absolute;top:-13px;left:calc(50% - 7px);border-left:7px solid transparent;border-right:7px solid transparent;border-top:18px solid #fff0b8;filter:drop-shadow(0 2px 2px #000)}
+.casino-wheel.spinning{animation:wheelSpin 2.6s cubic-bezier(.12,.7,.12,1) both}.casino-wheel-label{position:absolute;z-index:2;font-size:9px;font-weight:1000;color:#fff;text-shadow:0 1px 3px #000}
+.casino-reels{display:flex;gap:7px;position:relative;z-index:1}.casino-reel{width:68px;height:82px;display:grid;place-items:center;border-radius:10px;border:4px ridge #d6b56b;background:linear-gradient(90deg,#c4a05a,#fff0b5 22%,#b88b3e 75%,#62451e);box-shadow:0 5px 12px #0008,inset 0 0 9px #4d2f0e;overflow:hidden}.casino-reel span{font-size:37px;filter:drop-shadow(0 2px 2px #0005)}.casino-reel.spinning span{animation:reelBlur .11s linear infinite}
+.casino-dice{display:flex;gap:18px;position:relative;z-index:1}.casino-die{width:58px;height:58px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#fff,#cdd5df);color:#182333;font-size:37px;font-weight:1000;box-shadow:0 7px 0 #77808c,0 11px 16px #0008}.casino-dice.rolling .casino-die{animation:diceRoll .18s linear infinite}
+.casino-coin{width:94px;height:94px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 25%,#fff0b2,#d6a63f 48%,#6e431b 80%);border:7px ridge #f7d989;box-shadow:0 0 0 4px #533719,0 8px 18px #0009;font-size:46px;position:relative;z-index:1}.casino-coin.flipping{animation:coinFlip 1.5s ease-in-out}
+.casino-card{animation:cardDeal .38s cubic-bezier(.2,.8,.2,1) both;transform-origin:bottom center}
+@keyframes wheelSpin{0%{transform:rotate(0)}100%{transform:rotate(1440deg)}}@keyframes reelBlur{0%{transform:translateY(-12px);filter:blur(2px)}100%{transform:translateY(12px);filter:blur(2px)}}
+@keyframes diceRoll{0%{transform:translate(0,0) rotate(0)}35%{transform:translate(-8px,-12px) rotate(70deg)}70%{transform:translate(8px,5px) rotate(170deg)}100%{transform:translate(0,0) rotate(360deg)}}@keyframes coinFlip{0%{transform:rotateY(0) scale(1)}45%{transform:rotateY(900deg) scale(.72)}100%{transform:rotateY(1800deg) scale(1)}}
+@keyframes cardDeal{from{opacity:0;transform:translateY(-25px) rotate(-8deg) scale(.8)}to{opacity:1;transform:none}}@keyframes casinoWin{0%{transform:scale(.7);opacity:0}55%{transform:scale(1.16);text-shadow:0 0 20px #ffe08a}100%{transform:scale(1);opacity:1}}@keyframes casinoLose{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media(prefers-reduced-motion:reduce){.casino-wheel.spinning,.casino-reel.spinning span,.casino-dice.rolling .casino-die,.casino-coin.flipping,.casino-card{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media(max-width:380px){.casino-reel{width:58px;height:72px}.casino-die{width:50px;height:50px}.casino-felt{min-height:175px}}
+
+
+/* SIMFORGE ACCOUNT SYSTEM */
+.account-strip{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:8px 10px;background:#101d30;border:1px solid #2c456b;border-radius:13px}
+.account-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#243c5c;border:1px solid #54749b;display:grid;place-items:center;font-weight:900;flex:0 0 auto}
+.account-meta{min-width:0;flex:1}.account-meta b{font-size:12px}.account-meta small{display:block;color:#91a9c9;font-size:9px;margin-top:2px}
+.account-actions{display:flex;gap:5px}.account-actions .btn{padding:8px;font-size:10px}
+.creator-name{font-weight:1000;background:linear-gradient(90deg,#ff6262,#ffd45e,#65ed9a,#61cfff,#bd79ff,#ff6262);background-size:300% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:rainbowNumber 2.4s linear infinite}
+.creator-tag{color:#ffd36a!important;letter-spacing:1px;font-weight:1000}
+.auth-gate{position:fixed;z-index:100;inset:0;background:radial-gradient(ellipse at 50% 0%,#24436d,#080d19 70%);display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
+.auth-card{width:min(430px,100%);padding:20px;border:1px solid #45658c;border-radius:20px;background:linear-gradient(145deg,#1a2b46,#0c1525);box-shadow:0 20px 70px #000b}
+.auth-card h1{font-size:21px;margin:0 0 4px}.auth-card p{color:#9eb3d2;font-size:11px;line-height:1.5}.auth-card .input{margin:7px 0}.auth-switch{display:flex;gap:7px;margin:12px 0}.auth-switch button{flex:1;padding:10px;border-radius:9px;background:#172942;color:#9eb3d2;font-weight:900;font-size:11px}.auth-switch button.active{background:#315d91;color:white}.auth-error{color:#ff9cb2;font-size:11px;min-height:18px;margin:6px 0}.auth-note{font-size:10px;color:#8098b8;margin-top:12px}
+.profile-head{display:flex;align-items:center;gap:12px;padding:12px;background:#172740;border:1px solid #344f73;border-radius:13px}.profile-head img,.profile-head .account-avatar{width:62px;height:62px;border-radius:50%;object-fit:cover;background:#243c5c}.profile-head .account-avatar{font-size:22px}.profile-number{padding:9px;border:1px solid #344e71;border-radius:10px;background:#111d2e;margin:7px 0}
+@media(prefers-reduced-motion:reduce){.creator-name{animation:none}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><button class="icon" id="menuBtn">☰</button><div class="brand">SIM // FORGE<small>NUMBER EMPIRE · SEASON 01</small></div><button class="icon" id="soundBtn">♫</button></header>
+<div class="account-strip" id="accountStrip" style="display:none"><img class="account-avatar" id="accountAvatar" alt="avatar"><div class="account-meta"><b id="accountNick">Игрок</b><small id="accountRole">АККАУНТ</small></div><div class="account-actions"><button class="btn alt" id="profileBtn">ПРОФИЛЬ</button><button class="btn alt" id="peopleBtn">ПОИСК</button></div></div>
+<div class="stats"><div class="stat"><span>РУБЛИ</span><b id="money">150</b></div><div class="stat"><span>КОЛЛЕКЦИЯ</span><b id="count">0</b></div><div class="stat"><span>УРОВЕНЬ</span><b id="level">1</b></div></div>
+<div class="ticker">СИСТЕМА: <b id="ticker">ЛИНИИ СТАБИЛЬНЫ</b> · ДЕНЬ <b id="day">1</b></div>
+
+<section class="page active" id="home">
+ <div class="hero"><div class="hero-head"><span>◈ QUANTUM SIM GENERATOR</span><span id="eventTag">ONLINE</span></div><div class="sim" id="featured"><div class="sim-top"><span class="chip"></span><span>SIM // FORGE</span></div><div class="sim-num" id="featuredNum">+7 000 000-00-00</div><div class="sim-bottom"><span id="featuredOp">ОЖИДАНИЕ СИГНАЛА</span><span id="featuredRare">NO DATA</span></div></div><button class="generate" id="generate">⚡ СОЗДАТЬ SIM · <span id="pullCost">0</span> ₽</button><div class="row muted" style="margin-top:11px"><span>Пакет: <b id="batch">x1</b></span><span>Шанс редкости ↑ <b id="luck">0%</b></span><span>Гарантия: <b id="pity">0/80</b></span></div></div>
+ <div class="hint" id="tip">Подсказка: продавай дубликаты, чтобы оплачивать следующие запуски генератора. Улучшения помогают выйти в плюс.</div><div class="section">ПРОГРЕСС</div><div class="panel"><div class="row"><b style="font-size:12px">Уровень <span id="level2">1</span></b><b class="gold" id="xpText">0 / 100 XP</b></div><div class="progress"><i id="xpBar"></i></div><div class="row muted"><span>Следующая награда: <b id="levelReward">70 ₽</b></span><span>Автогенератор: <b id="autoLabel">ВЫКЛ</b></span></div></div>
+ <div class="section">СЕГОДНЯШНИЙ КОНТРАКТ</div><div class="panel" id="dailyHome"></div>
+ <div class="section">ПОСЛЕДНИЕ НАХОДКИ</div><div class="cardlist" id="recent"></div>
+ <div class="section">БЫСТРЫЙ ДОСТУП</div><div class="grid">
+  <button class="tile" data-page="collection"><i>🗃️</i><span><strong>КОЛЛЕКЦИЯ</strong><small>Собери полный архив</small></span></button>
+  <button class="tile" data-page="shop"><i>⚙️</i><span><strong>ЛАБОРАТОРИЯ</strong><small>Улучши оборудование</small></span></button>
+  <button class="tile" data-page="missions"><i>📡</i><span><strong>КОНТРАКТЫ</strong><small>Задания и награды</small></span></button>
+  <button class="tile" data-page="secrets"><i>🔐</i><span><strong>СЕКРЕТЫ</strong><small>Коды и достижения</small></span></button>
+ </div>
+</section>
+
+<section class="page" id="collection">
+ <div class="row"><div><div class="section" style="margin-top:2px">АРХИВ SIM</div><div class="muted">Открыто <b id="uniqueCount">0</b> из 7 видов</div></div><button class="btn danger" id="sellCommon">ПРОДАТЬ ВСЁ</button></div>
+ <div class="panel"><div class="row"><b style="font-size:12px">Коллекционная ценность</b><b class="gold" id="collectionWorth">0 ₽</b></div><div class="progress"><i id="collectionBar"></i></div><div class="muted">Дубликаты можно продавать. Первое открытие каждой редкости приносит исследовательские осколки.</div></div>
+ <div class="filters" id="filters"><button class="active" data-filter="all">Все</button><button data-filter="ОБЫЧНАЯ">Обычные</button><button data-filter="РЕДКАЯ">Редкие</button><button data-filter="ЭПИЧЕСКАЯ">Эпические</button><button data-filter="ЛЕГЕНДАРНАЯ">Легендарные</button><button data-filter="МИФИЧЕСКАЯ">Мифические</button><button data-filter="СЕКРЕТНАЯ">Секретные</button><button data-filter="ДРЕВНЯЯ">Древние</button></div>
+ <div class="cardlist" id="cards"></div>
+</section>
+
+<section class="page" id="shop">
+ <div class="section" style="margin-top:2px">ЛАБОРАТОРИЯ</div><div class="muted">Построй собственную империю связи. Каждый уровень имеет цену и эффект.</div><div id="upgrades"></div>
+ <div class="section">ПРЕСТИЖНЫЙ РЕАКТОР</div><div class="panel"><div class="row"><b>Ядра сингулярности</b><b class="gold" id="prestige">0</b></div><p class="muted">Перезапуск империи ради постоянного бонуса +12% к стоимости SIM за каждое ядро.</p><div class="row"><span class="muted">Можно получить: <b id="prestigeGain">0</b></span><button class="btn goldbtn" id="prestigeBtn">ВОЗНЕСТИСЬ</button></div></div>
+ <div class="section">ОСОБЫЕ МОДУЛИ</div><div id="modules"></div>
+</section>
+
+<section class="page" id="missions">
+ <div class="section" style="margin-top:2px">ЦЕНТР КОНТРАКТОВ</div><div class="panel"><div class="row"><b>Ежедневный бонус</b><span class="badge" id="streak">Серия: 0 дней</span></div><p class="muted">Заходи каждый день, чтобы забирать награды. Пропуск дня сбрасывает серию.</p><div class="row"><span class="gold" id="dailyReward">Награда: 250 ₽</span><button class="btn" id="claimDaily">ЗАБРАТЬ</button></div></div>
+ <div class="section">ЗАДАНИЯ</div><div id="quests"></div>
+ <div class="section">ДОСТИЖЕНИЯ</div><div id="achievements"></div>
+</section>
+
+<section class="page" id="secrets">
+ <div class="section" style="margin-top:2px">СЕКРЕТНЫЙ ТЕРМИНАЛ</div>
+ <div class="panel"><b>Ввести промокод</b><p class="muted">Некоторые коды выдаются в ходе событий. Один код можно активировать только один раз.</p><div class="row"><input class="input" id="codeInput" maxlength="24" placeholder="ВВЕДИ КОД" autocomplete="off" autocapitalize="characters"><button class="btn" id="redeem">АКТИВИРОВАТЬ</button></div><div class="muted" id="codeHint">Подсказка: один код уже спрятан в истории проекта.</div></div>
+ <div class="section">СЕКРЕТНЫЕ НАХОДКИ</div><div class="panel" id="secretProgress"></div>
+ <div class="section">ДОСЬЕ ДОСТИЖЕНИЙ</div><div id="secretAchievements"></div>
+ <div class="section">СИГНАЛЫ ИЗ ПУСТОТЫ</div><div class="panel"><p class="muted">Иногда система ловит странные сигналы. Попробуй нажать на логотип SIM // FORGE несколько раз подряд...</p><button class="btn alt full" id="signalBtn">ПРОВЕРИТЬ СИГНАЛ</button></div>
+</section>
+
+<section class="page" id="casino">
+ <div class="section" style="margin-top:2px">SIM // FORGE · GRAND CASINO</div>
+ <div class="hero casino-hero" style="background:linear-gradient(145deg,#3d2c19,#171d2a 65%,#101a2b);border-color:#a98243">
+  <div class="hero-head"><span>♠ PRIVATE GAMING ROOM</span><span class="gold">LIVE TABLES</span></div>
+  <div class="row"><div><div class="muted">ИГРОВОЙ БАНКРОЛЛ</div><div style="font-size:26px;font-weight:1000;color:#f5d58b" id="casinoBalance">0 ₽</div></div><div style="text-align:right"><div class="muted">ЧИСТЫЙ РЕЗУЛЬТАТ</div><b id="casinoNet" class="gold">0 ₽</b></div></div>
+ </div>
+ <div class="casino-stat" style="margin-top:9px"><div class="panel"><b id="casinoPlayed">0</b><span>РАУНДОВ</span></div><div class="panel"><b id="casinoWon">0</b><span>ПОБЕД</span></div><div class="panel"><b id="casinoBest">0 ₽</b><span>ЛУЧШИЙ ВЫИГРЫШ</span></div></div>
+ <div class="casino-game-tabs" id="casinoTabs">
+  <button class="active" data-cgame="roulette">🎡 РУЛЕТКА</button><button data-cgame="blackjack">🂡 БЛЭКДЖЕК</button><button data-cgame="slots">🎰 СЛОТЫ</button><button data-cgame="dice">🎲 КОСТИ</button><button data-cgame="coin">🪙 МОНЕТА</button>
+ </div>
+ <div class="casino-table"><h3 id="casinoTitle">EUROPEAN ROULETTE</h3><div class="casino-felt" id="casinoFelt"><div class="casino-big">🎡</div><div class="casino-sub">Европейская рулетка · 0–36</div></div><div class="casino-result" id="casinoResult"></div></div>
+ <div class="panel">
+  <div class="row"><b>Размер ставки</b><span class="muted">Без верхнего лимита</span></div>
+  <div class="casino-betrow"><input class="input" id="casinoBet" type="number" min="1" step="1" value="100" placeholder="Ставка ₽"><button class="btn alt" id="casinoMax">МАКС. БАНК</button></div>
+  <div class="casino-chips"><button data-chip="100">100</button><button data-chip="500">500</button><button data-chip="1000">1K</button><button data-chip="5000">5K</button><button data-chip="10000">10K</button></div>
+  <div id="casinoControls"></div>
+ </div>
+ <div class="section">ПОСЛЕДНИЕ РАУНДЫ</div><div class="panel casino-history" id="casinoHistory">Пока нет ставок.</div>
+ <p class="hint">Казино использует только виртуальные кредиты SIM // FORGE. Ставка может быть любого размера в пределах текущего игрового банка; реальные деньги и платежи не используются.</p>
+</section>
+\n<div class="footer">SIM // FORGE · WERUX QA CONSOLE · GRAND CASINO · WERUX ADMIN v3.9</div>
+</div>
+<nav class="nav" style="grid-template-columns:repeat(6,1fr)"><button class="active" data-nav="home"><span>⌂</span>БАЗА</button><button data-nav="collection"><span>▤</span>АРХИВ</button><button data-nav="casino"><span>♠</span>КАЗИНО</button><button data-nav="shop"><span>⚙</span>МАГАЗИН</button><button data-nav="missions"><span>◈</span>ЗАДАНИЯ</button><button data-nav="secrets"><span>🔐</span>СЕКРЕТЫ</button></nav>
+<div class="auth-gate" id="authGate"><div class="auth-card"><h1>SIM // FORGE</h1><p>Войди в аккаунт или создай новый. Твой игровой прогресс будет храниться в аккаунте и синхронизироваться между устройствами.</p><div class="auth-switch"><button class="active" id="authLoginTab">ВОЙТИ</button><button id="authRegisterTab">СОЗДАТЬ АККАУНТ</button></div><form id="authForm"><input class="input" id="authNick" placeholder="Твой ник (3–20 символов)" maxlength="20" autocomplete="username" required><input class="input" id="authPassword" type="password" placeholder="Пароль (от 8 символов)" autocomplete="current-password" minlength="8" required><button class="btn full" id="authSubmit" type="submit">ВОЙТИ</button></form><div class="auth-error" id="authError"></div><div class="auth-note" id="authStatus">Подключение к серверу аккаунтов…</div></div></div>
+<div class="toast" id="toast"></div><div class="overlay" id="overlay"><div class="sheet"><div class="sheethead"><h3 id="sheetTitle">ТЕРМИНАЛ</h3><button class="close" id="closeSheet">×</button></div><div id="sheetBody"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{
+"use strict";
+let KEY="sim_forge_save_v3_guest";
+const SUPABASE_URL="https://zfeoarinfphhbhcksnux.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_t3oscEO8003TYq-Fv3H_2w_cjvpAUbP";
+let db=null,currentUser=null,currentProfile=null,authMode="login",cloudSaveTimer=null,cloudBusy=false,cloudDirty=false;
+const LEGACY_KEYS=["sim_forge_save_v2","sim_forge_save_v1"];
+const R=[
+{name:"ОБЫЧНАЯ",weight:650,mult:1,color:"#b6bfd0",cls:"common"},
+{name:"РЕДКАЯ",weight:250,mult:3.5,color:"#52c7ff",cls:"rare"},
+{name:"ЭПИЧЕСКАЯ",weight:82,mult:12,color:"#c18aff",cls:"epic"},
+{name:"ЛЕГЕНДАРНАЯ",weight:15,mult:48,color:"#ffd36a",cls:"legendary"},
+{name:"МИФИЧЕСКАЯ",weight:2.7,mult:210,color:"#ff638d",cls:"mythic"},
+{name:"СЕКРЕТНАЯ",weight:.28,mult:1100,color:"#ffffff",cls:"secret"},
+{name:"ДРЕВНЯЯ",weight:.02,mult:9000,color:"#70ffe1",cls:"ancient"}
+];
+const OPS=["VOLT","NOVA","ORBIT","PULSE","AETHER","NEON","ION","ZENITH","GLITCH","FROST","ECHO","VOID"];
+const DEFAULT=()=>({money:150,shards:0,level:1,xp:0,total:0,sold:0,prestige:0,cards:[],seen:[],up:{speed:0,luck:0,value:0,auto:0,scanner:0,discount:0},pity:0,secretPity:0,codes:[],daily:{date:"",streak:0,claimed:false},quest:{date:"",progress:0,claimed:false},boostUntil:0,boostMult:1,day:1,signalClicks:0,secretFound:0,ach:{},lastDate:"",sound:true,casino:{played:0,won:0,net:0,best:0,history:[]}});
+let S=DEFAULT(),filter="all",autoClock=0,toastTimer,rolling=false,adminUnlocked=false;
+const $=id=>document.getElementById(id),fmt=n=>Math.floor(n).toLocaleString("ru-RU"),today=()=>{let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+function toast(t){let e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove("show"),2400)}
+function save(){
+ try{localStorage.setItem(KEY,JSON.stringify({format:"SIMFORGE_SAVE",version:4,savedAt:Date.now(),data:S}));}
+ catch(e){toast("Не удалось сохранить локальную копию");return false}
+ if(db&&currentUser){cloudDirty=true;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(pushCloudSave,650)}
+ return true;
+}
+async function pushCloudSave(){
+ if(!db||!currentUser||cloudBusy)return;
+ cloudBusy=true;cloudDirty=false;
+ try{const {error}=await db.from("game_saves").upsert({user_id:currentUser.id,save_data:S,updated_at:new Date().toISOString()},{onConflict:"user_id"});if(error)throw error;}
+ catch(e){console.error("Cloud save failed",e);toast("Облачное сохранение не удалось — проверь соединение")}
+ finally{cloudBusy=false;if(cloudDirty){clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(pushCloudSave,400)}}
+}
+
+function normalizeSave(x){
+ const base=DEFAULT(),data=x&&x.data&&typeof x.data==="object"?x.data:x;
+ if(!data||typeof data!=="object")throw Error("invalid save");
+ return {...base,...data, money:Math.max(0,Number(data.money)||0),level:Math.max(1,Math.floor(Number(data.level)||1)),xp:Math.max(0,Number(data.xp)||0),total:Math.max(0,Number(data.total)||0),sold:Math.max(0,Number(data.sold)||0),cards:Array.isArray(data.cards)?data.cards:[],seen:Array.isArray(data.seen)?data.seen:[],codes:Array.isArray(data.codes)?data.codes:[],up:{...base.up,...(data.up||{})},daily:{...base.daily,...(data.daily||{})},quest:{...base.quest,...(data.quest||{})},casino:{...base.casino,...(data.casino||{}),history:Array.isArray(data.casino?.history)?data.casino.history:[]}};
+}
+function load(){
+ try{
+  let raw=localStorage.getItem(KEY),migrated=false;
+  if(raw){S=normalizeSave(JSON.parse(raw));LEGACY_KEYS.forEach(k=>localStorage.removeItem(k));}
+  else{
+   for(const oldKey of LEGACY_KEYS){const legacy=localStorage.getItem(oldKey);if(!legacy)continue;let parsed=JSON.parse(legacy);
+    if(oldKey==="sim_forge_save_v1"&&!parsed.data){const base=DEFAULT();parsed={...base,money:parsed.money??150,level:parsed.level??1,xp:parsed.xp??0,total:parsed.total_generated??0,sold:parsed.total_sold??0,prestige:parsed.prestige??0,cards:Array.isArray(parsed.cards)?parsed.cards:[],up:{...base.up,...(parsed.upgrades||{})}};}
+    S=normalizeSave(parsed);migrated=true;break;
+   }
+  }
+  if(migrated){save();LEGACY_KEYS.forEach(k=>localStorage.removeItem(k));toast("Последнее сохранение перенесено в единую систему");}
+ }catch(e){S=DEFAULT();toast("Сохранение повреждено — загружен новый профиль")}
+ rollDaily();
+}
+function accountError(message){$("authError").textContent=message||""}
+function setAuthMode(mode){authMode=mode;$("authLoginTab").classList.toggle("active",mode==="login");$("authRegisterTab").classList.toggle("active",mode==="register");$("authNick").placeholder=mode==="login"?"Твой ник":"Придумай ник (3–20 символов)";$("authSubmit").textContent=mode==="login"?"ВОЙТИ":"СОЗДАТЬ АККАУНТ";$("authPassword").placeholder=mode==="login"?"Пароль":"Пароль (от 8 символов)";$("authPassword").autocomplete=mode==="login"?"current-password":"new-password";accountError("")}
+function safeText(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function avatarMarkup(url,nick){return url?`<img src="${safeText(url)}" alt="Аватар">`:`<div class="account-avatar">${safeText((nick||"?").slice(0,1).toUpperCase())}</div>`}
+function paintAccount(){if(!currentProfile)return;$("accountStrip").style.display="flex";$("accountAvatar").src=currentProfile.avatar_url||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' rx='32' fill='%23243c5c'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' fill='white' font-size='28'%3E"+encodeURIComponent((currentProfile.username||"?")[0].toUpperCase())+"%3C/text%3E%3C/svg%3E";$("accountNick").textContent=currentProfile.username;$("accountNick").className=currentProfile.role==="creator"?"creator-name":"";$("accountRole").textContent=currentProfile.role==="creator"?"CREATOR GAME":"ИГРОК SIM // FORGE";$("accountRole").className=currentProfile.role==="creator"?"creator-tag":""}
+async function startSession(session){currentUser=session.user;KEY="sim_forge_save_v3_"+currentUser.id;const {data:prof,error:pe}=await db.from("profiles").select("id,username,avatar_url,role").eq("id",currentUser.id).single();if(pe)throw pe;currentProfile=prof;
+ const {data:remote,error:se}=await db.from("game_saves").select("save_data").eq("user_id",currentUser.id).maybeSingle();if(se)throw se;
+ if(remote?.save_data){S=normalizeSave(remote.save_data);localStorage.setItem(KEY,JSON.stringify({format:"SIMFORGE_SAVE",version:4,data:S}));}
+ else{let raw=localStorage.getItem(KEY);if(raw)S=normalizeSave(JSON.parse(raw));else{S=DEFAULT();for(const oldKey of LEGACY_KEYS){let old=localStorage.getItem(oldKey);if(old){try{S=normalizeSave(JSON.parse(old));break}catch(_){}}}}await pushCloudSave();}
+ rollDaily();save();render();paintAccount();$("authGate").style.display="none";$("soundBtn").textContent=S.sound?"♫":"♪";}
+async function initAccounts(){
+ const status=$("authStatus");if(!window.supabase?.createClient||SUPABASE_URL.includes("YOUR_")||(SUPABASE_ANON_KEY.includes("YOUR_")||SUPABASE_ANON_KEY.includes("PASTE_"))){status.textContent="Нужно подключить Supabase: см. инструкцию и SQL рядом с HTML-файлом.";$("authSubmit").disabled=true;return}
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);status.textContent="Сервер аккаунтов подключён";
+ db.auth.onAuthStateChange(async(event,session)=>{if(event==="SIGNED_OUT"){currentUser=null;currentProfile=null;$("accountStrip").style.display="none";$("authGate").style.display="flex";} });
+ const {data,error}=await db.auth.getSession();if(error)throw error;if(data.session){await startSession(data.session)}else{$("authGate").style.display="flex"}
+}
+async function submitAuth(e){e.preventDefault();accountError("");if(!db)return accountError("Сначала настрой Supabase в файле HTML.");const username=$("authNick").value.trim().toLowerCase(),password=$("authPassword").value;if(!/^[a-zа-яё0-9_]{3,20}$/.test(username))return accountError("Ник: 3–20 символов, латиница, кириллица, цифры и _");if(password.length<8)return accountError("Пароль должен содержать минимум 8 символов.");const email=username+"@accounts.simforge.invalid";
+ try{if(authMode==="login"){const {data,error}=await db.auth.signInWithPassword({email,password});if(error)throw Error("Не удалось войти. Проверь ник и пароль.");if(data.session)await startSession(data.session)}else{const {data,error}=await db.auth.signUp({email,password,options:{data:{username}}});if(error)throw error;if(data.session)await startSession(data.session);else accountError("Регистрация создана, но сервер ожидает подтверждение email. Отключи подтверждение email в настройках Supabase, как указано в инструкции.")}}
+ catch(err){accountError(err.message||"Ошибка авторизации")}}
+async function signOut(){if(!confirm("Выйти из аккаунта? Прогресс уже синхронизируется."))return;await pushCloudSave();await db.auth.signOut();}
+async function editAccount(){if(!currentProfile)return;openSheet("МОЙ АККАУНТ",`<div class="profile-head">${avatarMarkup(currentProfile.avatar_url,currentProfile.username)}<div><b>${safeText(currentProfile.username)}</b><div class="muted">${currentProfile.role==="creator"?"CREATOR GAME":"Игровой профиль"}</div></div></div><div class="section">НИК ДЛЯ ВХОДА</div><p class="muted">${safeText(currentProfile.username)} — это имя пользователя для входа. Оно не меняется, чтобы ты всегда мог войти по своему нику и паролю.</p><div class="section">АВАТАР</div><input class="input" id="avatarFile" type="file" accept="image/png,image/jpeg,image/webp"><button class="btn full" id="uploadAvatar">ЗАГРУЗИТЬ ФОТО</button><p class="muted">Изображение до 2 МБ, PNG/JPG/WEBP.</p><button class="btn danger full" id="logoutBtn">ВЫЙТИ ИЗ АККАУНТА</button>`);
+  $("uploadAvatar").onclick=async()=>{const f=$("avatarFile").files[0];if(!f)return toast("Выбери изображение");if(f.size>2*1024*1024)return toast("Максимальный размер — 2 МБ");if(!["image/png","image/jpeg","image/webp"].includes(f.type))return toast("Формат должен быть PNG, JPG или WEBP");const ext=f.type.split("/")[1].replace("jpeg","jpg"),path=currentUser.id+"/avatar."+ext;const {error:upErr}=await db.storage.from("avatars").upload(path,f,{upsert:true,contentType:f.type});if(upErr)return toast(upErr.message);const {data}=db.storage.from("avatars").getPublicUrl(path);const url=data.publicUrl+"?v="+Date.now();const {error}=await db.from("profiles").update({avatar_url:url}).eq("id",currentUser.id);if(error)return toast(error.message);currentProfile.avatar_url=url;paintAccount();closeSheet();toast("Аватар обновлён")};$("logoutBtn").onclick=signOut;
+}
+async function showPublicProfile(username){const {data,error}=await db.rpc("public_profile_by_username",{lookup_username:username});if(error)return toast(error.message);const p=Array.isArray(data)?data[0]:data;if(!p)return toast("Игрок не найден");const creator=p.role==="creator";const cards=Array.isArray(p.cards)?p.cards:[];openSheet("ПРОФИЛЬ ИГРОКА",`<div class="profile-head">${avatarMarkup(p.avatar_url,p.username)}<div><b class="${creator?"creator-name":""}">${safeText(p.username)}</b><div class="muted ${creator?"creator-tag":""}">${creator?"CREATOR GAME":"ИГРОК SIM // FORGE"}</div></div></div>${creator?'<div class="hint">Профиль создателя защищён: баланс и номера скрыты.</div>':`<div class="section">БАЛАНС</div><div class="panel"><b class="gold">${fmt(Number(p.money)||0)} ₽</b></div><div class="section">КОЛЛЕКЦИЯ · ${cards.length}</div>${cards.length?cards.map(c=>`<div class="profile-number"><b>${safeText(c.number)}</b><div class="muted">${safeText(c.rarity)} · ${safeText(c.operator||"")}</div></div>`).join(""):'<div class="empty">У игрока пока нет SIM.</div>'}`}`)}
+function openPeopleSearch(){openSheet("ПОИСК ИГРОКОВ",`<input class="input" id="peopleQuery" placeholder="Введи ник игрока"><button class="btn full" id="peopleSearchGo" style="margin-top:8px">НАЙТИ</button><div id="peopleResults"></div>`);const run=async()=>{const q=$("peopleQuery").value.trim().toLowerCase();if(q.length<2)return toast("Введи минимум 2 символа");const {data,error}=await db.rpc("search_profiles",{search_term:q});if(error)return toast(error.message);$("peopleResults").innerHTML=(data||[]).map(p=>`<button class="panel full" data-user="${safeText(p.username)}" style="display:flex;align-items:center;gap:10px;text-align:left;width:100%">${avatarMarkup(p.avatar_url,p.username)}<span><b class="${p.role==="creator"?"creator-name":""}">${safeText(p.username)}</b><small class="muted" style="display:block">${p.role==="creator"?"CREATOR GAME":"Игрок"}</small></span></button>`).join("")||'<div class="empty">Никого не найдено.</div>';$("peopleResults").querySelectorAll("[data-user]").forEach(b=>b.onclick=()=>showPublicProfile(b.dataset.user))};$("peopleSearchGo").onclick=run;$("peopleQuery").onkeydown=e=>{if(e.key==="Enter")run()}}
+
+function rollDaily(){let d=today();if(S.daily.date!==d){let yd=new Date();yd.setDate(yd.getDate()-1);let y=yd.getFullYear()+"-"+String(yd.getMonth()+1).padStart(2,"0")+"-"+String(yd.getDate()).padStart(2,"0");S.daily.streak=S.daily.date===y?S.daily.streak+1:1;S.daily.date=d;S.daily.claimed=false}if(S.quest.date!==d){S.quest={date:d,progress:0,claimed:false}}}
+function rarity(n){return R.find(x=>x.name===n)||R[0]}
+function numberPattern(number){
+ // Accepts +7 XXX XXX-XX-XX, 8XXXXXXXXXX, or a bare 10-digit local number.
+ let d=String(number??"").replace(/\D/g,"");
+ if(d.length===11&&(d[0]==="7"||d[0]==="8"))d=d.slice(1);
+ if(d.length!==10)return R[0];
+ const counts={};for(const x of d)counts[x]=(counts[x]||0)+1;
+ const freq=Object.values(counts).sort((a,b)=>b-a);
+ const asc="0123456789",desc="9876543210";
+ let run=1,bestRun=1;
+ for(let i=1;i<d.length;i++){if((Number(d[i])-Number(d[i-1])+10)%10===1)run++;else run=1;bestRun=Math.max(bestRun,run)}
+ const palindrome=d===d.split("").reverse().join("");
+ if(freq[0]===10)return R[5];
+ if(freq[0]>=5||palindrome||d===asc||d===desc)return R[4];
+ if(freq[0]>=4||(freq[0]>=3&&freq[1]>=3)||bestRun>=8)return R[3];
+ if(freq[0]>=3||bestRun>=6)return R[2];
+ if(freq[0]>=2&&freq[1]>=2)return R[1];
+ return R[0];
+}
+function displayRarity(card){
+ const base=rarity(card.rarity),pattern=numberPattern(card.number);
+ return R[Math.max(R.indexOf(base),R.indexOf(pattern))]||base;
+}
+function numberBadgeClass(card){return "number-badge nr-"+displayRarity(card).cls;}
+function analyzeNumber(number){const d=String(number??"").replace(/\D/g,"");const local=d.length===11&&(d[0]==="7"||d[0]==="8")?d.slice(1):d;const r=numberPattern(number);const counts={};for(const x of local)counts[x]=(counts[x]||0)+1;const freq=Object.values(counts).sort((a,b)=>b-a);let run=1,bestRun=1;for(let i=1;i<local.length;i++){if((Number(local[i])-Number(local[i-1])+10)%10===1)run++;else run=1;bestRun=Math.max(bestRun,run)}const reasons=[];if(local.length!==10)reasons.push("Нужно ровно 10 цифр номера (код страны можно указать отдельно).");else{if(freq[0]===10)reasons.push("Все 10 цифр одинаковые");else if(local===local.split("").reverse().join(""))reasons.push("Палиндром / зеркальный номер");if(freq[0]>=5)reasons.push("5+ одинаковых цифр");else if(freq[0]===4)reasons.push("4 одинаковые цифры");if(freq[0]===3&&freq[1]>=3)reasons.push("Две группы по три одинаковые цифры");else if(freq[0]===3)reasons.push("Тройное повторение");if(bestRun>=6)reasons.push("Последовательность из "+bestRun+" цифр");if(freq.filter(x=>x>=2).length>=2)reasons.push("Несколько пар / повторяющихся групп");if(!reasons.length)reasons.push("Особый шаблон не обнаружен");}return {digits:local,rarity:r,reasons,valid:local.length===10};}
+
+function randNum(){let a="";for(let i=0;i<10;i++)a+=Math.floor(Math.random()*10);return "+7 "+a.slice(0,3)+" "+a.slice(3,6)+"-"+a.slice(6,8)+"-"+a.slice(8)}
+function cost(id){let b={speed:120,luck:210,value:280,auto:1450,scanner:850,discount:1100},f={speed:1.72,luck:1.9,value:1.78,auto:2.2,scanner:1.9,discount:2.0};return Math.floor(b[id]*Math.pow(f[id],S.up[id]))}
+function effectiveLuck(){return 1+S.up.luck*.16+S.up.scanner*.08}
+function batchSize(){return 1+Math.min(4,S.up.speed)}
+function activeBoost(){return S.boostUntil>Date.now()}
+function roll(){let weights=R.map((r,i)=>r.weight*(i?Math.pow(effectiveLuck(),i*.7):1));if(S.pity>=79)weights[3]+=weights.reduce((a,b)=>a+b,0)*.8;let total=weights.reduce((a,b)=>a+b,0),v=Math.random()*total;for(let i=0;i<weights.length;i++){v-=weights[i];if(v<=0)return R[i]}return R[0]}
+function makeCard(){let r;if(S.secretPity>=449){r=R[5];S.secretPity=0}else{r=roll();if(r.name==="СЕКРЕТНАЯ"||r.name==="ДРЕВНЯЯ")S.secretPity=0;else S.secretPity++}if(r.name==="ЛЕГЕНДАРНАЯ"||r.name==="МИФИЧЕСКАЯ"||r.name==="СЕКРЕТНАЯ"||r.name==="ДРЕВНЯЯ")S.pity=0;else S.pity++;let base=(10+Math.random()*15)*r.mult*(1+S.up.value*.18)*(1+S.prestige*.12)*(activeBoost()?S.boostMult:1);let c={id:Date.now().toString(36)+Math.random().toString(36).slice(2,8),number:randNum(),operator:OPS[Math.floor(Math.random()*OPS.length)],rarity:r.name,value:Math.floor(base),created:Date.now()};S.cards.unshift(c);S.total++;S.xp+=10;S.quest.progress++;if(!S.seen.includes(r.name)){S.seen.push(r.name);S.shards+=r.name==="ДРЕВНЯЯ"?100:r.name==="СЕКРЕТНАЯ"?30:r.name==="МИФИЧЕСКАЯ"?12:r.name==="ЛЕГЕНДАРНАЯ"?5:1;toast("НОВАЯ РЕДКОСТЬ В АРХИВЕ! +осколки")}checkLevel();return c}
+function pullCost(){return Math.max(8,Math.floor((14+S.total*.16+S.level*1.5)*batchSize()*(1-S.up.discount*.035)))}
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+let rollToken=0;
+async function generate(){
+ if(rolling)return;
+ const n=batchSize(),price=pullCost();
+ if(S.money<price){toast("Не хватает рублей. Продай дубликаты или выполни контракт.");return}
+ const button=$("generate"),el=$("featured"),num=$("featuredNum");
+ if(!button||!el||!num){toast("Не найден элемент генератора. Перезагрузи игру.");return}
+ rolling=true;
+ const token=++rollToken;
+ button.disabled=true;button.classList.add("is-rolling");button.innerHTML='⏳ СКАНИРОВАНИЕ… · <span id="pullCost">'+fmt(pullCost())+'</span> ₽';
+ S.money-=price;save();render();
+ // Reapply locked state after render, and animate with a bounded frame count.
+ button.disabled=true;button.classList.add("is-rolling");button.innerHTML='⏳ СКАНИРОВАНИЕ… · <span id="pullCost">'+fmt(pullCost())+'</span> ₽';
+ el.classList.remove("result","pop","rarity-glow","legendary-tease","mythic-tease","legendary-reveal","mythic-reveal","rarity-rare-reveal","rarity-epic-reveal","rarity-legendary-reveal","rarity-mythic-reveal","rarity-secret-reveal","rarity-ancient-reveal");num.className="sim-num";el.classList.add("rolling");
+ $("eventTag").textContent="SCANNING";
+ $("featuredOp").textContent="ПОИСК СИГНАЛА…";
+ $("featuredRare").textContent="СЧИТЫВАНИЕ ЧАСТОТЫ";
+ let made=[];
+ try{
+  for(let i=0;i<n;i++)made.push(makeCard());
+  const targetRarity=made[0].rarity;
+  if(targetRarity==="ЛЕГЕНДАРНАЯ"||targetRarity==="МИФИЧЕСКАЯ"){
+   const mythic=targetRarity==="МИФИЧЕСКАЯ";
+   el.classList.add(mythic?"mythic-tease":"legendary-tease");
+   $("eventTag").textContent=mythic?"⚠ ANOMALY":"✦ GOLD SIGNAL";
+   $("featuredOp").textContent=mythic?"ОБНАРУЖЕНА АНОМАЛИЯ":"НЕОБЫЧНЫЙ СИГНАЛ";
+   $("featuredRare").textContent=mythic?"КРИТИЧЕСКОЕ ИСКАЖЕНИЕ":"ЗОЛОТОЙ ОТКЛИК";
+   if(navigator.vibrate)navigator.vibrate(mythic?[35,35,70]:[25,45]);
+  }
+  const duration=2000;
+  const started=Date.now();
+  let frame=0;
+  while(Date.now()-started<duration){
+   if(token!==rollToken)return;
+   const elapsed=Date.now()-started;
+   const t=Math.min(1,elapsed/duration);
+   num.textContent=randNum();
+   $("featuredOp").textContent=OPS[Math.floor(Math.random()*OPS.length)];
+   $("featuredRare").textContent=t<.68?"ПОИСК СИГНАЛА":t<.9?"СИНХРОНИЗАЦИЯ":"ФИКСАЦИЯ…";
+   frame++;
+   const delay=frame<18?45:frame<28?65:95;
+   await wait(Math.min(delay,Math.max(1,duration-(Date.now()-started))));
+  }
+  if(token!==rollToken)return;
+  S.day=1+Math.floor(S.total/30);
+  const feature=made[0],r=rarity(feature.rarity),visual=displayRarity(feature);
+  num.textContent=feature.number;
+  num.className="sim-num "+numberBadgeClass(feature);
+  $("featuredOp").textContent=feature.operator;
+  $("featuredRare").textContent=visual.name+(visual.name!==r.name?" · РЕДКОСТЬ НОМЕРА":"");
+  el.style.setProperty("--rarity",visual.color);
+  el.classList.remove("rolling","legendary-tease","mythic-tease","rarity-rare-reveal","rarity-epic-reveal","rarity-legendary-reveal","rarity-mythic-reveal","rarity-secret-reveal","rarity-ancient-reveal");
+  // Restart the reveal animation reliably, including on Android WebView.
+  void el.offsetWidth;
+  el.classList.add("result");
+  el.classList.add("rarity-"+visual.cls+"-reveal");
+  if(visual.name==="ЛЕГЕНДАРНАЯ")el.classList.add("legendary-reveal");
+  if(visual.name==="МИФИЧЕСКАЯ")el.classList.add("mythic-reveal");
+  $("eventTag").textContent="SIGNAL LOCKED";
+  if(navigator.vibrate)navigator.vibrate([25,35,55]);
+  save();render();
+  num.textContent=feature.number;
+  num.className="sim-num "+numberBadgeClass(feature);
+  $("featuredOp").textContent=feature.operator;
+  $("featuredRare").textContent=visual.name+(visual.name!==r.name?" · РЕДКОСТЬ НОМЕРА":"");
+  el.style.setProperty("--rarity",visual.color);
+  if(feature.rarity==="ЛЕГЕНДАРНАЯ"||feature.rarity==="МИФИЧЕСКАЯ")setTimeout(()=>el.classList.remove("legendary-reveal","mythic-reveal"),1400);
+  if(made.some(x=>["МИФИЧЕСКАЯ","СЕКРЕТНАЯ","ДРЕВНЯЯ"].includes(x.rarity)))celebrate(made.find(x=>["МИФИЧЕСКАЯ","СЕКРЕТНАЯ","ДРЕВНЯЯ"].includes(x.rarity)));
+  else toast(n>1?`Создано ${n} SIM · −${fmt(price)} ₽`:`${feature.rarity} SIM · ${fmt(feature.value)} ₽`);
+ }catch(err){
+  console.error("SIM FORGE generation error:",err);
+  save();toast("Ошибка генерации. Прогресс сохранён; попробуй ещё раз.");
+ }finally{
+  if(token===rollToken){
+   el.classList.remove("rolling");
+   button.disabled=false;button.classList.remove("is-rolling");
+   button.innerHTML='⚡ СОЗДАТЬ SIM · <span id="pullCost">'+fmt(pullCost())+'</span> ₽';
+   rolling=false;
+   $("eventTag").textContent="ONLINE";
+  }
+ }
+}
+function checkLevel(){while(S.xp>=S.level*100){S.xp-=S.level*100;S.level++;let reward=50+S.level*20;S.money+=reward;toast(`УРОВЕНЬ ${S.level}! +${reward} ₽`)}}
+function sellCard(id){let i=S.cards.findIndex(c=>c.id===id);if(i<0)return;let c=S.cards.splice(i,1)[0];S.money+=c.value;S.sold++;save();render();toast("Продано за "+fmt(c.value)+" ₽")}
+function sellCommon(){
+ const count=S.cards.length;
+ if(!count){toast("Архив пуст — нечего продавать");return}
+ const earned=S.cards.reduce((sum,c)=>sum+Math.max(0,Number(c.value)||0),0);
+ if(!confirm(`Продать ВСЕ ${count} SIM-карт(ы) за ${fmt(earned)} ₽? Это действие нельзя отменить.`))return;
+ S.sold+=count;S.cards=[];S.money+=earned;save();render();toast(`Продано всё: ${count} SIM · +${fmt(earned)} ₽`);
+}
+function buy(id){let p=cost(id);if(S.money<p)return toast("Недостаточно рублей");if(id==="auto"&&S.up.auto>=1)return;S.money-=p;S.up[id]++;save();render();toast("Модуль улучшен")}
+function prestigeGain(){return Math.floor(Math.sqrt(Math.max(0,S.total-120)/90))}
+function prestige(){let n=prestigeGain();if(n<1)return toast("Нужно сгенерировать минимум 210 SIM");if(!confirm(`Перезапустить империю и получить ${n} ядер? Все карты и обычные улучшения будут сброшены.`))return;S.money=150;S.cards=[];S.level=1;S.xp=0;S.total=0;S.sold=0;S.up={speed:0,luck:0,value:0,auto:0,scanner:0,discount:0};S.pity=0;S.secretPity=0;S.prestige+=n;save();render();go("shop");toast("СИНГУЛЯРНОСТЬ ДОСТИГНУТА")}
+function questClaim(){if(S.quest.progress<15||S.quest.claimed)return;S.quest.claimed=true;S.money+=650;S.shards+=5;save();render();toast("Контракт выполнен: +650 ₽ и 5 осколков")}
+function dailyClaim(){if(S.daily.claimed)return;let reward=180+S.daily.streak*45;S.money+=reward;S.shards+=Math.min(10,S.daily.streak);S.daily.claimed=true;save();render();toast("Ежедневная награда: +"+reward+" ₽")}
+function activateCode(){let code=$("codeInput").value.trim().toLowerCase();if(!code)return toast("Введи промокод");if(S.codes.includes(code))return toast("Этот код уже использован");let rewards={troshki:()=>{S.money+=2500;S.shards+=25;S.boostUntil=Date.now()+10*60*1000;S.boostMult=2;S.pity=Math.max(0,S.pity-15);return "TROSHKI: +2500 ₽, +25 осколков и x2 стоимость на 10 минут!"}};if(!rewards[code]){toast("Код не найден");return}rewards[code]();S.codes.push(code);save();render();$("codeInput").value="";toast("ПРОМОКОД АКТИВИРОВАН!")}
+const UP=[["speed","⚡ Мультигенератор","+1 SIM за действие. До x5."],["luck","🔮 Квантовая удача","Увеличивает шанс редких карт."],["value","💎 Оценщик","Повышает цену каждой найденной SIM."],["auto","🤖 Автогенератор","Создаёт SIM автоматически каждые 8 секунд."],["scanner","📡 Сканер частот","Повышает удачу и открывает скрытые сигналы."],["discount","🏷️ Оптовый контракт","Снижает стоимость будущих улучшений."]];
+function renderShop(){$("upgrades").innerHTML=UP.map(([id,name,desc])=>{let p=cost(id),lv=S.up[id],max=id==="auto"&&lv>=1;return `<div class="panel"><div class="row"><b>${name}</b><span class="badge">УР. ${lv}${max?" · MAX":""}</span></div><p class="muted">${desc}</p><div class="row"><span class="gold">${fmt(p)} ₽</span><button class="btn" data-buy="${id}" ${S.money<p||max?"disabled":""}>${max?"КУПЛЕНО":"УЛУЧШИТЬ"}</button></div></div>`}).join("");$("upgrades").querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>buy(b.dataset.buy));$("modules").innerHTML=`<div class="panel"><div class="row"><b>⚗️ Усилитель стоимости</b><span class="badge">${activeBoost()?"АКТИВЕН":"ГОТОВ"}</span></div><p class="muted">Удваивает стоимость всех найденных SIM на 10 минут. Цена: 12 осколков.</p><button class="btn full" id="boostBtn" ${S.shards<12||activeBoost()?"disabled":""}>АКТИВИРОВАТЬ · 12 ◈</button></div>`;$("boostBtn").onclick=()=>{if(S.shards<12||activeBoost())return;S.shards-=12;S.boostUntil=Date.now()+600000;S.boostMult=2;save();render();toast("УСИЛИТЕЛЬ АКТИВИРОВАН · 10 МИН")}}
+function cardHTML(c,sell=true){let r=rarity(c.rarity),v=displayRarity(c),special=v.name!==r.name;return `<article class="simitem" style="--rarity:${v.color};border-color:${v.color};box-shadow:0 0 16px ${v.color}35"><div class="row"><span class="rarity ${v.cls}">${v.name}${special?" · НОМЕР":""}</span><span class="muted">${c.operator}</span></div><div class="num ${numberBadgeClass(c)}">${c.number}</div><div class="row"><span class="muted">${special?"БАЗА: "+c.rarity:"SIM // FORGE"}</span><b class="gold">${fmt(c.value)} ₽</b></div>${sell?`<button class="btn full" style="margin-top:9px" data-sell="${c.id}">ПРОДАТЬ</button>`:""}</article>`}
+function renderCollection(){let list=S.cards.filter(c=>filter==="all"||c.rarity===filter);$("cards").innerHTML=list.length?list.map(c=>cardHTML(c)).join(""):'<div class="empty">Пока нет карт этой редкости.</div>';document.querySelectorAll("[data-sell]").forEach(b=>b.onclick=()=>sellCard(b.dataset.sell));$("uniqueCount").textContent=S.seen.length;$("collectionWorth").textContent=fmt(S.cards.reduce((a,c)=>a+c.value,0))+" ₽";$("collectionBar").style.width=(S.seen.length/7*100)+"%"}
+function renderQuests(){let p=Math.min(15,S.quest.progress);$("quests").innerHTML=`<div class="quest"><div class="row"><b>📦 Поставки сигнала</b><span class="badge">ЕЖЕДНЕВНО</span></div><p class="muted">Сгенерируй 15 SIM-карт за день.</p><div class="row muted"><span>${p}/15</span><span>Награда: 650 ₽ + 5 ◈</span></div><div class="progress"><i style="width:${p/15*100}%"></i></div><button class="btn full" id="questClaim" ${p<15||S.quest.claimed?"disabled":""}>${S.quest.claimed?"ВЫПОЛНЕНО":"ЗАБРАТЬ НАГРАДУ"}</button></div>`;$("questClaim").onclick=questClaim;$("streak").textContent="Серия: "+S.daily.streak+" дн.";$("dailyReward").textContent="Награда: "+fmt(180+S.daily.streak*45)+" ₽ + осколки";$("claimDaily").disabled=S.daily.claimed;$("claimDaily").textContent=S.daily.claimed?"ПОЛУЧЕНО":"ЗАБРАТЬ";$("claimDaily").onclick=dailyClaim;
+let defs=[["first","🎯","Первый контакт","Создай первую SIM",S.total>=1,"100 ₽"],["ten","📦","Снабженец","Создай 10 SIM",S.total>=10,"250 ₽"],["hundred","🏭","Фабрика","Создай 100 SIM",S.total>=100,"1000 ₽"],["rare","🔹","Голубая удача","Найди редкую SIM",S.seen.includes("РЕДКАЯ"),"5 ◈"],["legend","🏆","Золотая линия","Найди легендарную SIM",S.seen.includes("ЛЕГЕНДАРНАЯ"),"15 ◈"],["myth","🌌","За гранью","Найди мифическую SIM",S.seen.includes("МИФИЧЕСКАЯ"),"30 ◈"],["secret","👁️","Не должно было существовать","Найди секретную SIM",S.seen.includes("СЕКРЕТНАЯ"),"100 ◈"],["ancient","♾️","Первородный сигнал","Найди древнюю SIM",S.seen.includes("ДРЕВНЯЯ"),"500 ◈"],["collector","🗂️","Архивариус","Открой все 7 редкостей",S.seen.length>=7,"1000 ◈"],["reborn","💠","Новая эпоха","Получи первое ядро",S.prestige>=1,"500 ₽"]];
+$("achievements").innerHTML=defs.map(d=>`<div class="achievement ${d[4]?"done":""}"><span class="medal">${d[1]}</span><div style="flex:1"><b style="font-size:12px">${d[2]}</b><div class="muted">${d[3]}</div></div><span class="badge">${d[4]?"✓ ГОТОВО":d[5]}</span></div>`).join("")}
+function exportSave(){let blob=new Blob([JSON.stringify({format:"SIMFORGE_SAVE",version:3,data:S},null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sim-forge-save.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast("Резервная копия сохранения создана")}
+function importSave(file){if(!file)return;let reader=new FileReader();reader.onload=()=>{try{let obj=JSON.parse(reader.result);let data=obj.data||obj;if(!data||!Array.isArray(data.cards)||typeof data.money!=="number")throw Error("bad save");const base=DEFAULT();S={...base,...data, money:Math.max(0,Number(data.money)||0), level:Math.max(1,Math.floor(Number(data.level)||1)), xp:Math.max(0,Number(data.xp)||0), total:Math.max(0,Number(data.total)||0), cards:data.cards.filter(c=>c&&typeof c.number==="string"&&typeof c.rarity==="string"), seen:Array.isArray(data.seen)?data.seen:[], codes:Array.isArray(data.codes)?data.codes:[], up:{...base.up,...(data.up||{})}, daily:{...base.daily,...(data.daily||{})}, quest:{...base.quest,...(data.quest||{})}};save();render();toast("Сохранение успешно загружено")}catch(e){toast("Файл сохранения повреждён или не подходит")}};reader.readAsText(file)}
+function openSavePanel(){openSheet("СОХРАНЕНИЕ",`<p class="muted">Весь прогресс игры сохраняется одним актуальным профилем: баланс, архив, улучшения, задания, казино и статистика. Автосохранение работает в этом браузере.</p><div class="save-actions"><button class="btn" id="exportSave">ЭКСПОРТ JSON</button><button class="btn alt" id="importPick">ИМПОРТ JSON</button></div><input id="saveFile" type="file" accept="application/json,.json" hidden><p class="hint">Для переноса на другой браузер или сайт используй экспорт JSON и затем импорт. Локальное сохранение привязано к адресу сайта и устройству.</p><button class="btn full alt" id="saveNow">СОХРАНИТЬ СЕЙЧАС</button>`);$("exportSave").onclick=exportSave;$("importPick").onclick=()=>$("saveFile").click();$("saveFile").onchange=e=>importSave(e.target.files[0]);$("saveNow").onclick=()=>{save();toast("Сохранено")}}
+function renderAdmin(){if(!adminUnlocked)return;let old=$("adminPanel");if(old){const diag=$("adminDiagnostics");if(diag)diag.innerHTML=`Всего генераций: <b>${S.total}</b><br>Карт в архиве: <b>${S.cards.length}</b><br>Баланс: <b>${moneyText(S.money)}</b><br>Пити: <b>${S.pity}/80</b> · Секретный гарант: <b>${S.secretPity}/450</b>`;const auto=$("adminAuto");if(auto)auto.textContent="АВТОГЕНЕРАТОР: "+(S.up.auto?"ВКЛ":"ВЫКЛ");const cstats=$("adminCasinoStats");if(cstats){const c=S.casino||DEFAULT().casino;cstats.textContent=`Баланс ${moneyText(S.money)} · Раундов ${c.played} · Побед ${c.won} · Результат ${c.net>=0?"+":""}${moneyText(c.net)}`;}return;}let host=$("secrets");let box=document.createElement("div");box.id="adminPanel";box.className="admin-box";box.innerHTML=`<h3>⚙ WERUX · QA / АДМИН-КОНСОЛЬ</h3><div class="muted">Локальная тестовая среда. Тест предпросмотра не меняет сохранение.</div>
+<div class="admin-console">
+ <section class="admin-section"><h4>1 · АНАЛИЗ НОМЕРА И РЕДКОСТИ</h4><input class="input" id="qaNumber" value="482 619-35-07" placeholder="10 цифр номера"><div class="admin-actions"><button class="btn" id="qaAnalyze">АНАЛИЗИРОВАТЬ</button><button class="btn alt" id="qaPreview">ПРЕДПРОСМОТР АНИМАЦИИ</button></div><div class="admin-result" id="qaResult">Введи номер и нажми «Анализировать»</div></section>
+ <section class="admin-section"><h4>2 · ПРИНУДИТЕЛЬНЫЙ ТЕСТ РЕДКОСТИ</h4><div class="admin-fields"><select class="input" id="qaRarity">${R.map((r,i)=>`<option value="${i}">${r.name}</option>`).join("")}</select><input class="input" id="qaOperator" value="WERUX" maxlength="12" placeholder="Оператор"></div><div class="admin-actions"><button class="btn" id="qaForcePreview">ПРОИГРАТЬ ВЫБРАННУЮ</button><button class="btn alt" id="qaInject">ДОБАВИТЬ В АРХИВ</button></div><p class="muted">Можно проверить каждую рамку и эффект, не ожидая случайного выпадения.</p></section>
+ <section class="admin-section"><h4>3 · БЫСТРЫЕ ИНСТРУМЕНТЫ ПРОГРЕССА</h4><div class="admin-fields"><input class="input" id="adminMoney" type="number" min="0" placeholder="Кредиты"><input class="input" id="adminShards" type="number" min="0" placeholder="Осколки"><input class="input" id="adminLevel" type="number" min="1" placeholder="Уровень"><input class="input" id="adminCount" type="number" min="1" max="100" placeholder="SIM выдать"></div><div class="admin-actions"><button class="btn" id="adminApply">ПРИМЕНИТЬ</button><button class="btn" id="adminGrant">ВЫДАТЬ SIM</button><button class="btn alt" id="adminBoost">УСИЛЕНИЕ x5 · 1 ЧАС</button><button class="btn alt" id="adminAuto">АВТОГЕНЕРАТОР: ${S.up.auto?"ВКЛ":"ВЫКЛ"}</button></div></section>
+ <section class="admin-section"><h4>4 · CASINO CONTROL ROOM</h4><div class="muted" id="adminCasinoStats">Казино: загрузка статистики…</div><div class="admin-fields" style="margin-top:8px"><input class="input" id="adminCasinoBalance" type="number" min="0" step="1" placeholder="Установить баланс казино"><input class="input" id="adminCasinoAdd" type="number" min="0" step="1" placeholder="Добавить кредиты"><input class="input" id="adminCasinoBet" type="number" min="1" step="1" placeholder="Тестовая ставка"><select class="input" id="adminCasinoGame"><option value="roulette">Рулетка</option><option value="blackjack">Блэкджек</option><option value="slots">Слоты</option><option value="dice">Кости</option><option value="coin">Монета</option></select></div><div class="admin-actions"><button class="btn" id="adminCasinoApply">ПРИМЕНИТЬ БАЛАНС</button><button class="btn" id="adminCasinoAddBtn">НАЧИСЛИТЬ КРЕДИТЫ</button><button class="btn alt" id="adminCasinoOpen">ОТКРЫТЬ КАЗИНО</button><button class="btn alt" id="adminCasinoSetBet">УСТАНОВИТЬ СТАВКУ</button><button class="btn danger" id="adminCasinoClear">ОЧИСТИТЬ СТАТИСТИКУ</button><button class="btn alt" id="adminCasinoExport">ЭКСПОРТ ЛОГА</button></div><p class="muted">Инструменты работают с виртуальными кредитами. Очистка статистики не меняет игровой баланс.</p></section>
+ <section class="admin-section"><h4>5 · ДИАГНОСТИКА / СБРОС</h4><div class="admin-fields"><div class="muted" id="adminDiagnostics">Всего генераций: <b>${S.total}</b><br>Карт в архиве: <b>${S.cards.length}</b></div><div class="muted">Пити: <b>${S.pity}/80</b><br>Секретный гарант: <b>${S.secretPity}/450</b></div></div><div class="admin-actions"><button class="btn alt" id="qaRunChecks">ПРОВЕРИТЬ ШАБЛОНЫ</button><button class="btn danger" id="adminReset">СБРОСИТЬ ПРОГРЕСС</button><button class="btn alt" id="adminLock">ЗАКРЫТЬ ПАНЕЛЬ</button></div><div class="admin-result admin-log" id="qaLog">Ожидание тестов…</div></section>
+</div><p class="hint">Код werux и эта панель находятся в клиентском HTML: это удобная локальная QA-панель, но не защищённая серверная авторизация.</p>`;host.appendChild(box);
+ const log=(msg)=>{const e=$("qaLog");if(e)e.innerHTML=msg+"<br>"+e.innerHTML};
+ const testCard=(number,base,operator)=>({id:"qa-"+Date.now()+Math.random().toString(36).slice(2,6),number,operator:operator||"WERUX",rarity:base.name,value:0,created:Date.now()});
+ const showPreview=(c)=>{const el=$("featured"),num=$("featuredNum"),v=displayRarity(c),oldClasses=[...el.classList].filter(x=>x.startsWith("rarity-")&&x.endsWith("-reveal"));el.classList.remove("rolling","legendary-tease","mythic-tease",...oldClasses,"legendary-reveal","mythic-reveal");num.textContent=c.number;num.className="sim-num "+numberBadgeClass(c);$("featuredOp").textContent=c.operator;$("featuredRare").textContent=v.name+(v.name!==c.rarity?" · РЕДКОСТЬ НОМЕРА":"")+" · ТЕСТ";el.style.setProperty("--rarity",v.color);void el.offsetWidth;el.classList.add("result","rarity-"+v.cls+"-reveal");if(v.name==="ЛЕГЕНДАРНАЯ")el.classList.add("legendary-reveal");if(v.name==="МИФИЧЕСКАЯ")el.classList.add("mythic-reveal");log("PREVIEW: "+c.number+" → "+v.name);};
+ const analyze=()=>{const a=analyzeNumber($("qaNumber").value),base=R[Number($("qaRarity").value)||0],combined=R[Math.max(R.indexOf(a.rarity),R.indexOf(base))];$("qaResult").innerHTML=a.valid?`<b>${a.digits}</b><div class="rarity ${a.rarity.cls}" style="margin:6px">ШАБЛОН: ${a.rarity.name}</div><div class="muted">${a.reasons.join(" · ")}</div><div class="hint">С выбранной базовой редкостью: <b>${combined.name}</b></div>`:`<span class="pink">НЕКОРРЕКТНЫЙ НОМЕР</span><div class="muted">${a.reasons.join(" ")}</div>`;return a;};
+ $("qaAnalyze").onclick=analyze;
+ $("qaPreview").onclick=()=>{const a=analyze();if(!a.valid)return toast("Нужен номер из 10 цифр");showPreview(testCard($("qaNumber").value,R[0],"NUMBER QA"));};
+ $("qaForcePreview").onclick=()=>{const a=analyze();if(!a.valid)return toast("Нужен номер из 10 цифр");showPreview(testCard($("qaNumber").value,R[Number($("qaRarity").value)||0],$("qaOperator").value));};
+ $("qaInject").onclick=()=>{const a=analyze();if(!a.valid)return toast("Нужен номер из 10 цифр");const c=testCard($("qaNumber").value,R[Number($("qaRarity").value)||0],$("qaOperator").value);S.cards.unshift(c);save();render();renderAdmin();toast("Тестовая SIM добавлена в архив · прогресс не изменён");};
+ $("qaRunChecks").onclick=()=>{const cases=[["0000000000","СЕКРЕТНАЯ"],["1111111111","СЕКРЕТНАЯ"],["1234543210","РЕДКАЯ"],["1234567890","ЛЕГЕНДАРНАЯ"],["7771237771","МИФИЧЕСКАЯ"],["1122334455","РЕДКАЯ"],["4826193507","ОБЫЧНАЯ"],["+7 777 777-77-77","СЕКРЕТНАЯ"],["+7 482 619-35-07","ОБЫЧНАЯ"]];let pass=0;const out=cases.map(([n,expected])=>{const a=analyzeNumber(n),ok=a.valid&&a.rarity.name===expected;if(ok)pass++;return `${ok?"✓":"✗"} ${n} → ${a.valid?a.rarity.name:"INVALID"} (ожидалось ${expected})`});$("qaLog").textContent=`АВТОТЕСТ: ${pass}/${cases.length} ПРОЙДЕНО\n`+out.join("\n");log(`AUTOTEST ${pass}/${cases.length}`);};
+ $("adminApply").onclick=()=>{let m=$("adminMoney").value,sh=$("adminShards").value,l=$("adminLevel").value;if(m!=="")S.money=Math.max(0,Number(m));if(sh!=="")S.shards=Math.max(0,Number(sh));if(l!=="")S.level=Math.max(1,Math.floor(Number(l)));save();render();renderAdmin();toast("Параметры обновлены")};
+ $("adminGrant").onclick=()=>{let n=Math.max(1,Math.min(100,Number($("adminCount").value)||1));for(let i=0;i<n;i++)makeCard();save();render();renderAdmin();toast("Выдано SIM: "+n)};
+ $("adminBoost").onclick=()=>{S.boostUntil=Date.now()+3600000;S.boostMult=5;save();render();renderAdmin();toast("Усиление x5 включено на час")};
+ $("adminAuto").onclick=()=>{S.up.auto=S.up.auto?0:1;save();render();renderAdmin()};
+ $("adminCasinoApply").onclick=()=>{const v=$("adminCasinoBalance").value;if(v===""||!Number.isFinite(Number(v))||Number(v)<0)return toast("Укажи корректный баланс");S.money=Math.floor(Number(v));save();render();toast("Баланс казино установлен")};
+ $("adminCasinoAddBtn").onclick=()=>{const v=Number($("adminCasinoAdd").value);if(!Number.isSafeInteger(v)||v<1)return toast("Укажи число кредитов больше нуля");S.money+=v;save();render();toast("Начислено "+moneyText(v))};
+ $("adminCasinoOpen").onclick=()=>{casinoGame=$("adminCasinoGame").value;go("casino")};
+ $("adminCasinoSetBet").onclick=()=>{const v=Number($("adminCasinoBet").value);if(!Number.isSafeInteger(v)||v<1)return toast("Ставка должна быть целым числом от 1");go("casino");const field=$("casinoBet");if(field){field.value=String(v);toast("Тестовая ставка установлена")}};
+ $("adminCasinoClear").onclick=()=>{if(!confirm("Очистить историю и статистику казино? Баланс и прогресс останутся."))return;S.casino={...DEFAULT().casino};save();render();toast("Статистика казино очищена")};
+ $("adminCasinoExport").onclick=()=>{const c=S.casino||DEFAULT().casino;const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),casino:c},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sim-forge-casino-log.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast("Лог казино экспортирован")};
+ $("adminReset").onclick=()=>{if(confirm("Точно полностью сбросить прогресс? Это нельзя отменить без резервной копии.")){S=DEFAULT();save();render();renderAdmin();toast("Прогресс сброшен")}};
+ $("adminLock").onclick=()=>{adminUnlocked=false;box.remove();toast("Админ-панель закрыта")};
+}
+function renderSecrets(){$("secretProgress").innerHTML=`<div class="row"><span class="muted">До гаранта секретной карты</span><b class="cyan">${Math.min(450,S.secretPity)}/450</b></div><div class="progress"><i style="width:${Math.min(100,S.secretPity/450*100)}%"></i></div><div class="muted">После 450 генераций без секретной или древней карты следующая редкая находка будет секретной. Древняя карта остаётся сверхредкой.</div><hr style="border:0;border-top:1px solid #30445f;margin:12px 0"><div class="row"><span class="muted">Исследовательские осколки</span><b class="gold">${fmt(S.shards)} ◈</b></div><div class="muted" style="margin-top:7px">Активные усилители: ${activeBoost()?"x"+S.boostMult+" стоимости · "+Math.ceil((S.boostUntil-Date.now())/60000)+" мин":"нет"}</div>`;$("secretAchievements").innerHTML=`<div class="achievement ${S.seen.includes("СЕКРЕТНАЯ")?"done":""}"><span class="medal">🌠</span><div><b style="font-size:12px">Секретная частота</b><div class="muted">Открой секретную SIM</div></div></div><div class="achievement ${S.seen.includes("ДРЕВНЯЯ")?"done":""}"><span class="medal">♾️</span><div><b style="font-size:12px">Древний сигнал</b><div class="muted">Найди то, чего нет в каталоге</div></div></div><div class="achievement ${S.codes.includes("troshki")?"done":""}"><span class="medal">🎁</span><div><b style="font-size:12px">Свой человек</b><div class="muted">Активируй особый промокод</div></div></div>`;renderAdmin()}
+function render(){ $("money").textContent=fmt(S.money);$("count").textContent=fmt(S.cards.length);$("level").textContent=S.level;$("level2").textContent=S.level;$("day").textContent=1+Math.floor(S.total/30);$("xpText").textContent=fmt(S.xp)+" / "+fmt(S.level*100)+" XP";$("xpBar").style.width=Math.min(100,S.xp/(S.level*100)*100)+"%";$("levelReward").textContent=fmt(50+(S.level+1)*20)+" ₽";$("autoLabel").textContent=S.up.auto?"КАЖДЫЕ 8 СЕК":"ВЫКЛ";$("batch").textContent="x"+batchSize();$("luck").textContent="+"+Math.round((effectiveLuck()-1)*100)+"%";$("pity").textContent=Math.min(80,S.pity)+"/80";if($("pullCost"))$("pullCost").textContent=fmt(pullCost());$("prestige").textContent=S.prestige;$("prestigeGain").textContent=prestigeGain();$("prestigeBtn").disabled=prestigeGain()<1;$("recent").innerHTML=S.cards.length?S.cards.slice(0,3).map(c=>cardHTML(c,false)).join(""):'<div class="empty">Сигнал ещё не получен. Запусти генератор!</div>';let q=Math.min(15,S.quest.progress);$("dailyHome").innerHTML=`<div class="row"><b style="font-size:12px">Поставки сигнала</b><span class="badge">${q}/15</span></div><div class="progress"><i style="width:${q/15*100}%"></i></div><div class="row muted"><span>Награда: 650 ₽ + 5 ◈</span><button class="btn" data-go="missions">ПОДРОБНЕЕ</button></div>`;$("dailyHome").querySelector("button").onclick=()=>go("missions");renderCollection();renderShop();renderQuests();renderSecrets()}
+
+let casinoGame="roulette",bj=null,casinoBusy=false;
+const casinoTitles={roulette:"EUROPEAN ROULETTE",blackjack:"BLACKJACK · 21",slots:"ROYAL SLOT MACHINE",dice:"HIGH / LOW DICE",coin:"DOUBLE OR NOTHING"};
+const redNums=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const moneyText=n=>Math.floor(n).toLocaleString("ru-RU")+" ₽";
+function casinoBet(){const n=Number($("casinoBet")?.value);return Number.isFinite(n)?Math.floor(n):0}
+function casinoCanPlay(){let b=casinoBet();if(!Number.isSafeInteger(b)||b<1){toast("Укажи корректную ставку");return false}if(b>S.money){toast("Недостаточно кредитов");return false}return true}
+function casinoRecord(label,stake,delta,detail){S.casino=S.casino||DEFAULT().casino;S.casino.played++;if(delta>0)S.casino.won++;S.casino.net+=delta;S.casino.best=Math.max(S.casino.best,delta);S.casino.history.unshift({label,stake,delta,detail,time:Date.now()});S.casino.history=S.casino.history.slice(0,12);save();render();renderCasino()}
+function casinoControls(){const c=$("casinoControls");if(!c)return;
+ const btn=(label,act,cls="")=>`<button class="btn ${cls}" data-caction="${act}">${label}</button>`;
+ if(casinoGame==="roulette")c.innerHTML=`<div class="muted">Выбери ставку на цвет или сектор. Выплата указана вместе с возвратом ставки.</div><div class="casino-actions">${btn("🔴 КРАСНОЕ · x2","red")}${btn("⚫ ЧЁРНОЕ · x2","black")}${btn("🟢 ЗЕЛЁНОЕ 0 · x36","green","goldbtn")}${btn("ЧЁТНОЕ · x2","even")}${btn("НЕЧЁТНОЕ · x2","odd")}${btn("1–18 · x2","low")}${btn("19–36 · x2","high")}</div><div class="row" style="margin-top:9px"><input class="input" id="rouletteNumber" type="number" min="0" max="36" placeholder="Число 0–36"><button class="btn alt" data-caction="number">СТАВКА НА ЧИСЛО · x36</button></div>`;
+ else if(casinoGame==="slots")c.innerHTML=`<div class="muted">Три барабана. Три одинаковых символа дают крупный множитель.</div><button class="btn full goldbtn" data-caction="spin">🎰 КРУТИТЬ БАРАБАНЫ</button><div class="muted" style="margin-top:7px">3×7: x12 · 3×💎: x20 · 3×👑: x35 · 3×7️⃣: x75 · пара: x1.5</div>`;
+ else if(casinoGame==="dice")c.innerHTML=`<div class="muted">Предскажи, будет ли сумма двух костей выше или ниже 7. При выпадении 7 — возврат ставки.</div><div class="casino-actions">${btn("БОЛЬШЕ 7 · x2","over")}${btn("МЕНЬШЕ 7 · x2","under")}</div>`;
+ else if(casinoGame==="coin")c.innerHTML=`<div class="muted">Угадай сторону монеты. Вероятность 50/50, выплата x2.</div><div class="casino-actions">${btn("🦅 ОРЁЛ · x2","heads")}${btn("РЕШКА · x2","tails")}</div>`;
+ else if(casinoGame==="blackjack")c.innerHTML=bj?`<div class="muted">Раунд идёт. Добери карты или остановись.</div><div class="casino-actions">${btn("ВЗЯТЬ КАРТУ","hit")}${btn("ОСТАНОВИТЬСЯ","stand","goldbtn")}</div>`:`<div class="muted">Цель — набрать ближе к 21, чем дилер, не перебрав. Блэкджек оплачивается 3:2.</div><button class="btn full goldbtn" data-caction="deal">🂡 РАЗДАТЬ КАРТЫ</button>`;
+}
+function renderCasino(){if(!$("casino"))return;S.casino=S.casino||DEFAULT().casino;$("casinoBalance").textContent=moneyText(S.money);$("casinoNet").textContent=(S.casino.net>=0?"+":"")+moneyText(S.casino.net);$("casinoPlayed").textContent=S.casino.played;$("casinoWon").textContent=S.casino.won;$("casinoBest").textContent=moneyText(S.casino.best);$("casinoTitle").textContent=casinoTitles[casinoGame];document.querySelectorAll("[data-cgame]").forEach(b=>b.classList.toggle("active",b.dataset.cgame===casinoGame));$("casinoHistory").innerHTML=S.casino.history.length?S.casino.history.map(h=>`<div class="row"><span>${h.label} · ${h.detail}</span><b class="${h.delta>=0?"gold":"pink"}">${h.delta>=0?"+":""}${moneyText(h.delta)}</b></div>`).join(""):"Пока нет ставок.";
+ const felt=$("casinoFelt");if(!bj){felt.innerHTML=casinoGame==="roulette"?`<div class="casino-big">🎡</div><div class="casino-sub">Европейская рулетка · 37 секторов · один ноль</div>`:casinoGame==="slots"?`<div class="casino-big">🎰 🎰 🎰</div><div class="casino-sub">ROYAL JACKPOT · 3 БАРАБАНА</div>`:casinoGame==="dice"?`<div class="casino-big">🎲 + 🎲</div><div class="casino-sub">СУММА ОТ 2 ДО 12</div>`:casinoGame==="coin"?`<div class="casino-big">🪙</div><div class="casino-sub">ОРЁЛ ИЛИ РЕШКА</div>`:`<div class="casino-big">🂡</div><div class="casino-sub">BLACKJACK TABLE</div>`}casinoControls()}
+function casinoResult(html){const el=$("casinoResult");el.innerHTML=html;el.classList.remove("win","lose");if(/ПОБЕД|ВЫИГР|ВЫПЛАТ|УГАДАЛ/i.test(String(html)))el.classList.add("win");else if(/ПРОИГР|ПУСТО|НЕ УГАДАЛ|проиграла/i.test(String(html)))el.classList.add("lose")}
+const casinoWait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function casinoPlay(action){if(casinoBusy)return;if(casinoGame==="roulette"&&action==="number"){let pick=Number($("rouletteNumber").value);if(!Number.isInteger(pick)||pick<0||pick>36){toast("Введи число от 0 до 36");return}}if(casinoGame==="blackjack"&&bj){if(action==="hit"){bj.player.push(bjCard());if(bjTotal(bj.player)>21){bj.hide=false;finishBJ(false)}else renderBJ();return}if(action==="stand"){while(bjTotal(bj.dealer)<17)bj.dealer.push(bjCard());bj.hide=false;let p=bjTotal(bj.player),d=bjTotal(bj.dealer);finishBJ(p>21?false:d>21||p>d?true:p===d?"push":false);return}}
+ if(!casinoCanPlay())return;casinoBusy=true;const stake=casinoBet();S.money-=stake;
+ const feltNow=$("casinoFelt");
+ if(casinoGame==="roulette"){feltNow.innerHTML='<div class="casino-wheel spinning"><span class="casino-wheel-label">ZERO</span></div><div class="casino-sub">ШАРИК ВРАЩАЕТСЯ · СТАВКИ ЗАКРЫТЫ</div>';await casinoWait(2650)}
+ else if(casinoGame==="slots"){feltNow.innerHTML='<div class="casino-reels">'+[0,1,2].map(()=>'<div class="casino-reel spinning"><span>🍒</span></div>').join('')+'</div><div class="casino-sub">ROYAL JACKPOT · SPINNING</div>';let reels=[...feltNow.querySelectorAll('.casino-reel span')],sy=['🍒','🍋','🔔','💎','👑','7️⃣'];let tick=setInterval(()=>reels.forEach(x=>x.textContent=sy[Math.floor(Math.random()*sy.length)]),85);await casinoWait(1850);clearInterval(tick)}
+ else if(casinoGame==="dice"){feltNow.innerHTML='<div class="casino-dice rolling"><div class="casino-die">⚄</div><div class="casino-die">⚅</div></div><div class="casino-sub">КОСТИ БРОШЕНЫ</div>';await casinoWait(950)}
+ else if(casinoGame==="coin"){feltNow.innerHTML='<div class="casino-coin flipping">🪙</div><div class="casino-sub">МОНЕТА В ПОЛЁТЕ</div>';await casinoWait(1500)}
+ if(casinoGame==="roulette"){let n=Math.floor(Math.random()*37),color=n===0?"green":redNums.has(n)?"red":"black";let win=action==="number"?n===Number($("rouletteNumber").value):action==="green"?n===0:action==="red"||action==="black"?color===action:action==="even"?n!==0&&n%2===0:action==="odd"?n%2===1:action==="low"?n>=1&&n<=18: n>=19&&n<=36;let mult=action==="number"||action==="green"?36:2;let gross=win?stake*mult:0;S.money+=gross;let delta=gross-stake;casinoRecord("Рулетка",stake,delta,`${n} · ${color==="red"?"красное":color==="black"?"чёрное":"зелёное"}`);$("casinoFelt").innerHTML=`<div class="casino-big" style="color:${color==="red"?"#ff6876":color==="black"?"#fff":"#6dffbb"}">${n}</div><div class="casino-sub">${color.toUpperCase()} · ${win?"ПОБЕДА":"ПРОИГРЫШ"}</div>`;casinoResult(win?`ВЫИГРЫШ ${moneyText(gross)} · x${mult}`:`Ставка ${moneyText(stake)} проиграла`)}
+ else if(casinoGame==="slots"){const syms=["🍒","🍋","🔔","💎","👑","7️⃣"];let a=[0,0,0].map(()=>syms[Math.floor(Math.random()*syms.length)]);let same=a[0]===a[1]&&a[1]===a[2],pair=!same&&(a[0]===a[1]||a[1]===a[2]||a[0]===a[2]);let mult=same?({"7️⃣":75,"💎":20,"👑":35,"🔔":8,"🍒":5,"🍋":4}[a[0]]):pair?1.5:0;let gross=Math.floor(stake*mult);S.money+=gross;let delta=gross-stake;casinoRecord("Слоты",stake,delta,a.join(" "));$("casinoFelt").innerHTML=`<div class="casino-big">${a.join("　")}</div><div class="casino-sub">${same?"ТРИ ОДИНАКОВЫХ":pair?"ПАРА":"НЕТ СОВПАДЕНИЙ"}</div>`;casinoResult(mult?`ВЫПЛАТА ${moneyText(gross)} · x${mult}`:"ПУСТО · СЛЕДУЮЩИЙ СПИН?")}
+ else if(casinoGame==="dice"){let a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6),sum=a+b,win=sum===7?"push":action==="over"?sum>7:sum<7;let gross=win===true?stake*2:win==="push"?stake:0;S.money+=gross;let delta=gross-stake;casinoRecord("Кости",stake,delta,`${a} + ${b} = ${sum}`);$("casinoFelt").innerHTML=`<div class="casino-big">${a} ⚄ ${b}</div><div class="casino-sub">СУММА ${sum}</div>`;casinoResult(win==="push"?"СЕМЁРКА · СТАВКА ВОЗВРАЩЕНА":win?`ПОБЕДА · ${moneyText(gross)}`:"НЕ УГАДАЛ")}
+ else if(casinoGame==="coin"){let side=Math.random()<.5?"heads":"tails",win=side===action,gross=win?stake*2:0;S.money+=gross;let delta=gross-stake;casinoRecord("Монета",stake,delta,side==="heads"?"орёл":"решка");$("casinoFelt").innerHTML=`<div class="casino-big">${side==="heads"?"🦅":"🌕"}</div><div class="casino-sub">${side==="heads"?"ОРЁЛ":"РЕШКА"}</div>`;casinoResult(win?`УГАДАЛ · ${moneyText(gross)}`:"НЕ УГАДАЛ")}
+ $("casinoResult").textContent=$("casinoResult").textContent||"Раунд завершён";casinoBusy=false}
+
+$("casinoTabs").addEventListener("click",e=>{if(casinoBusy)return;let b=e.target.closest("[data-cgame]");if(!b)return;casinoGame=b.dataset.cgame;bj=null;casinoResult("");renderCasino()});
+$("casinoControls").addEventListener("click",e=>{let b=e.target.closest("[data-caction]");if(!b)return;let a=b.dataset.caction;if(a==="deal"){dealBJ();return}casinoPlay(a)});
+$("casinoMax").onclick=()=>{$("casinoBet").value=Math.floor(S.money)};
+document.querySelectorAll("[data-chip]").forEach(b=>b.onclick=()=>{$("casinoBet").value=Number($("casinoBet").value||0)+Number(b.dataset.chip)});
+function bjValue(c){c=(c&&typeof c==="object")?c.v:c;return c==="A"?11:["K","Q","J"].includes(c)?10:Number(c)}
+function drawBJ(){let v=["A","2","3","4","5","6","7","8","9","10","J","Q","K"][Math.floor(Math.random()*13)];return v}
+function bjTotal(hand){let t=hand.reduce((a,c)=>a+bjValue(c),0),aces=hand.filter(c=>c==="A").length;while(t>21&&aces-- >0)t-=10;return t}
+function bjCards(hand){return hand.map(c=>`<span class="casino-card ${["♥","♦"].includes(c.suit)?"red":""}">${c.v}${c.suit}</span>`).join("")}
+function bjCard(){let v=drawBJ(),s=["♠","♥","♦","♣"][Math.floor(Math.random()*4)];return {v,suit:s}}
+function renderBJ(){let p=bj.player,d=bj.dealer;$("casinoFelt").innerHTML=`<div class="casino-sub">ДИЛЕР · ${bj.hide?"?":bjTotal(d)}</div><div>${d.map((c,i)=>bj.hide&&i===1?'<span class="casino-card back">?</span>':`<span class="casino-card ${["♥","♦"].includes(c.suit)?"red":""}">${c.v}${c.suit}</span>`).join("")}</div><div class="casino-sub" style="margin-top:8px">ТЫ · ${bjTotal(p)}</div><div>${bjCards(p)}</div>`;casinoControls()}
+function finishBJ(result){const stake=bj.stake;let gross=result==="push"?stake:result===true?Math.floor(stake*(bj.natural?2.5:2)):0;S.money+=gross;let delta=gross-stake;casinoRecord("Блэкджек",stake,delta,`ты ${bjTotal(bj.player)} · дилер ${bjTotal(bj.dealer)}`);bj=null;renderCasino();casinoResult(result==="push"?"НИЧЬЯ · СТАВКА ВОЗВРАЩЕНА":result?`ПОБЕДА · ВЫПЛАТА ${moneyText(gross)}`:"ДИЛЕР ПОБЕДИЛ")}
+function dealBJ(){if(!casinoCanPlay())return;let stake=casinoBet();S.money-=stake;bj={stake,player:[bjCard(),bjCard()],dealer:[bjCard(),bjCard()],hide:true,natural:false};bj.natural=bjTotal(bj.player)===21;if(bj.natural){bj.hide=false;let d=bjTotal(bj.dealer)===21;finishBJ(d?"push":true);return}renderBJ();save();render()}
+
+function go(id){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll("[data-nav]").forEach(b=>b.classList.toggle("active",b.dataset.nav===id));if(id==="secrets")renderSecrets();if(id==="casino")renderCasino()}
+document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>go(b.dataset.nav));document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("#adminPanel input")){e.preventDefault();}});document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>go(b.dataset.page));
+$("generate").onclick=generate;$("sellCommon").onclick=sellCommon;$("prestigeBtn").onclick=prestige;
+$("filters").onclick=e=>{let b=e.target.closest("[data-filter]");if(!b)return;filter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderCollection()};
+$("redeem").onclick=()=>{let c=$("codeInput").value.trim().toLowerCase();if(!c)return toast("Введи код");if(c==="werux"&&currentProfile?.role==="creator"){adminUnlocked=true;$("codeInput").value="";go("secrets");renderAdmin();toast("WERUX QA-КОНСОЛЬ ОТКРЫТА");return}if(S.codes.includes(c))return toast("Код уже использован");if(c!=="troshki")return toast("Неизвестный код");S.money+=2500;S.shards+=25;S.boostUntil=Date.now()+600000;S.boostMult=2;S.pity=Math.max(0,S.pity-15);S.codes.push(c);$("codeInput").value="";save();render();toast("TROSHKI: +2500 ₽ · +25 ◈ · x2 на 10 минут")};
+$("soundBtn").onclick=()=>{S.sound=!S.sound;$("soundBtn").textContent=S.sound?"♫":"♪";save();toast(S.sound?"Звук-индикатор включён":"Звук-индикатор выключен")};
+function openSheet(title,html){$("sheetTitle").textContent=title;$("sheetBody").innerHTML=html;$("overlay").classList.add("show")}function closeSheet(){$("overlay").classList.remove("show")}
+$("closeSheet").onclick=closeSheet;$("overlay").onclick=e=>{if(e.target===$("overlay"))closeSheet()};
+$("menuBtn").onclick=()=>openSheet("НАВИГАЦИЯ",`<div class="grid">${[["home","⌂","База"],["collection","▤","Архив"],["casino","♠","Казино"],["shop","⚙","Лаборатория"],["missions","◈","Контракты"],["secrets","🔐","Секреты"]].map(x=>`<button class="tile" data-sheet="${x[0]}"><i>${x[1]}</i><strong>${x[2]}</strong></button>`).join("")}</div><div class="save-actions" style="margin-top:10px"><button class="btn" data-save-menu="1">💾 СОХРАНЕНИЕ</button><button class="btn alt" data-secret-menu="1">🔐 СЕКРЕТЫ</button></div><p class="muted">SIM // FORGE · облачный аккаунт</p>`);
+$("sheetBody").onclick=e=>{let b=e.target.closest("[data-sheet]");if(b){go(b.dataset.sheet);closeSheet();return}if(e.target.closest("[data-save-menu]")){openSavePanel();return}if(e.target.closest("[data-secret-menu]")){go("secrets");closeSheet()}};
+let clicks=0,clickTimer;function celebrate(c){toast("✦ НЕВЕРОЯТНАЯ НАХОДКА: "+c.rarity+" ✦");$("featured").classList.add("pop")}
+$("brand")?.addEventListener("click",()=>{});
+$("signalBtn").onclick=()=>{S.signalClicks++;if(S.signalClicks>=7){S.signalClicks=0;S.money+=777;S.shards+=7;S.secretFound++;save();render();toast("ПАСХАЛКА: 777 ₽ И 7 ОСКОЛКОВ!")}else toast("Сигнал "+S.signalClicks+"/7 · продолжай")};
+$("brand")?.addEventListener("click",()=>{});
+$("menuBtn").addEventListener("dblclick",()=>{$("signalBtn").click()});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)save()});window.addEventListener("pagehide",save);window.addEventListener("beforeunload",save);setInterval(save,15000);
+$("authLoginTab").onclick=()=>setAuthMode("login");$("authRegisterTab").onclick=()=>setAuthMode("register");$("authForm").onsubmit=submitAuth;$("profileBtn").onclick=editAccount;$("peopleBtn").onclick=openPeopleSearch;initAccounts().catch(e=>{console.error(e);accountError(e.message||"Не удалось подключиться к серверу")});const tips=["Подсказка: продавай дубликаты, чтобы оплачивать следующие запуски генератора.","Редкие карты ценнее. Не продавай первую карту нового типа — она открывает исследовательские осколки.","Улучшение удачи влияет на веса редкостей, а сканер частот усиливает этот эффект.","Перед переносом на сайт скачай JSON-копию в меню → Сохранение.","Контракты и ежедневные награды помогают пережить рост стоимости генерации."];let tipIndex=0;setInterval(()=>{tipIndex=(tipIndex+1)%tips.length;let t=$("tip");if(t)t.textContent=tips[tipIndex]},9000);
+setInterval(()=>{if(S.up.auto&&!rolling){autoClock++;if(autoClock>=8){autoClock=0;generate()}}if(activeBoost()&&$("secrets").classList.contains("active"))renderSecrets()},1000);
+})();
+</script>
+</body>
+</html>
